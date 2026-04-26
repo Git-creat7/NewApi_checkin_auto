@@ -48,7 +48,7 @@
 ## 🟢 签到类 
 * **Boxying**: 
     * 脚本路径: `asia/creat/boxying-checkin.py`
-    * 特点: 基于 `reward_center` 接口，模拟浏览器 Alpha 版逻辑。
+    * 特点: 基于 `reward_center` 接口，模拟浏览器 Alpha 版逻辑
 
 ## 🟡 待适配平台
 * [ ] 更多基于 NEW API 的站点...

@@ -12,10 +12,33 @@ API_USER = os.getenv("BOXYING_API_USER", "").strip()
 # 推送环境变量
 PUSH_KEY = os.getenv("PUSH_KEY", "").strip()
 TIMEOUT = int(os.getenv("BOXYING_TIMEOUT", "30"))
+PUSHPLUS_TOKEN = os.getenv("PUSHPLUS_TOKEN", "").strip()
 
 
 class ApiError(RuntimeError):
     pass
+
+
+def send_pushplus(title: str, content: str) -> None:
+    if not PUSHPLUS_TOKEN:
+        return
+
+    try:
+        response = requests.post(
+            "https://www.pushplus.plus/send",
+            json={
+                "token": PUSHPLUS_TOKEN,
+                "title": title,
+                "content": content,
+                "template": "markdown",
+            },
+            impersonate="chrome124",
+            timeout=TIMEOUT,
+        )
+        response.raise_for_status()
+        print(f"PushPlus response: {response.text[:300]}")
+    except Exception as exc:
+        print(f"PushPlus send failed: {exc}", file=sys.stderr)
 
 
 def current_month() -> str:
@@ -186,12 +209,26 @@ def run_once(include_api_user: bool) -> int:
 
 def main() -> int:
     try:
-        return run_once(include_api_user=True)
+        code = run_once(include_api_user=True)
+        send_pushplus(
+            "Boxying 签到结果",
+            f"### Boxying 签到成功\n\n- 站点: `{BASE_URL}`\n- 时间: `{current_day()}`",
+        )
+        return code
     except ApiError as exc:
         msg = str(exc)
         if API_USER and "insufficient privileges" in msg.lower():
             print("⚠️ 使用 new-api-user 头失败，尝试仅凭 session 重试一次...")
-            return run_once(include_api_user=False)
+            code = run_once(include_api_user=False)
+            send_pushplus(
+                "Boxying 签到结果",
+                f"### Boxying 签到成功\n\n- 站点: `{BASE_URL}`\n- 时间: `{current_day()}`\n- 备注: `new-api-user` 回退为仅使用 session",
+            )
+            return code
+        send_pushplus(
+            "Boxying 签到失败",
+            f"### Boxying 签到失败\n\n- 站点: `{BASE_URL}`\n- 时间: `{current_day()}`\n- 错误: `{msg}`",
+        )
         raise
 
 

@@ -54,7 +54,7 @@ def make_session(include_api_user: bool = True) -> requests.Session:
         raise ApiError("XEM_SESSION is required.")
 
     session = requests.Session(impersonate="chrome124", timeout=TIMEOUT)
-    session.cookies.set("session", SESSION, domain="www.XEM.com")
+    session.cookies.set("session", SESSION, domain="www.xem8k5.top")
     session.headers.update(
         {
             "Accept": "application/json, text/plain, */*",

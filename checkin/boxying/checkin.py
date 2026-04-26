@@ -9,6 +9,8 @@ from curl_cffi import requests
 BASE_URL = os.getenv("BOXYING_BASE_URL", "https://www.boxying.com").rstrip("/")
 SESSION = os.getenv("BOXYING_SESSION", "").strip()
 API_USER = os.getenv("BOXYING_API_USER", "").strip()
+# 推送环境变量
+PUSH_KEY = os.getenv("PUSH_KEY", "").strip()
 TIMEOUT = int(os.getenv("BOXYING_TIMEOUT", "30"))
 
 

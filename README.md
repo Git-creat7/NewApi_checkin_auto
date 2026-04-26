@@ -10,11 +10,11 @@
 
 ---
 
-## 🔑 关键变量获取指南
+# 🔑 关键变量获取指南
 
 为了保护账号安全，脚本统一通过环境变量读取敏感信息。以下是获取这些变量的方法：
 
-### Boxying
+## Boxying
 - **站点地址**: [Boxying](https://www.boxying.com/register?aff=henf)
 - **获取 BOXYING_SESSION**:
     1. 使用 Chrome 浏览器登录站点。
@@ -27,7 +27,7 @@
 
 ---
 
-## ⚙️ 配置 GitHub Actions
+# ⚙️ 配置 GitHub Actions
 
 1. Fork 或上传代码到你的仓库。
 2. 进入仓库的 **Settings -> Secrets and variables -> Actions**。
@@ -40,27 +40,27 @@
 
 ---
 
-## 📂 项目结构与分类
+# 📂 项目结构与分类
 
 目前已支持以下平台，后续将持续更新：
 
-### 🟢 签到类 (Check-in)
+## 🟢 签到类 (Check-in)
 * **Boxying**: 
     * 脚本路径: `asia/creat/boxying-checkin.py`
     * 特点: 基于 `reward_center` 接口，模拟浏览器 Alpha 版逻辑。
 
-### 🟡 待适配平台 (Upcoming)
+## 🟡 待适配平台 (Upcoming)
 * [ ] 更多基于 One API 的站点...
 * [ ] 更多基于 V2Board 的站点...
 
 ---
 
-## ⏰ 定时任务说明
+# ⏰ 定时任务说明
 
 工作流默认配置在 **北京时间每天上午 09:10** 运行。
 你可以通过修改 `.github/workflows/checkin.yml` 中的 `cron` 表达式来调整时间。
 
-## ⚠️ 免责声明 (Disclaimer)
+# ⚠️ 免责声明 (Disclaimer)
 
 1. **仅供学习**: 本项目相关脚本仅用于网络爬虫技术的学习与研究，请勿用于任何非法用途。
 2. **合规性自负**: 自动签到可能违反站点服务条款（TOS）。使用本项目造成的账号被封禁、额度清空等后果，由使用者自行承担。

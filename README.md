@@ -14,7 +14,7 @@
 
 为了保护账号安全，脚本统一通过环境变量读取敏感信息。以下是获取这些变量的方法：
 
-### 1. 盒子镜像 (Boxying)
+### Boxying
 - **站点地址**: `https://www.boxying.com`
 - **获取 BOXYING_SESSION**:
     1. 使用 Chrome 浏览器登录站点。

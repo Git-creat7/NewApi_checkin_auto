@@ -1,0 +1,35 @@
+name: boxying-checkin
+
+on:
+  workflow_dispatch: # 支持手动点击运行
+  schedule:
+    # 每天北京时间上午 09:10 运行 (UTC 01:10)
+    # 稍微错开整点，避免 GitHub Actions 排队高峰
+    - cron: '10 1 * * *'
+
+jobs:
+  checkin:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run Script
+        env:
+          # 从 GitHub Secrets 中读取敏感信息
+          BOXYING_SESSION: ${{ secrets.BOXYING_SESSION }}
+          BOXYING_API_USER: ${{ secrets.BOXYING_API_USER }}
+          # 如果你的脚本还需要其他变量（如 BASE_URL），也加在这里
+          BOXYING_BASE_URL: "https://www.boxying.com"
+        run: python asia/creat/boxying-checkin.py

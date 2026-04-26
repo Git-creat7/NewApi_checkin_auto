@@ -2,11 +2,12 @@
 
 本项目用于实现基于 New API / One API 架构的 AI 中转站自动签到。支持通过 GitHub Actions 实现每日定时自动运行。
 
-## 环境准备
-
+## 本地运行环境准备
 1. **Python 版本**: 3.10+
 2. **核心依赖**: `curl_cffi` (用于模拟浏览器指纹，绕过基础反爬)
-3. **部署方式**: 本地运行 或 GitHub Actions 自动化
+```cmd
+  pip install curl_cffi
+```
 
 ---
 

@@ -32,5 +32,5 @@ jobs:
           BOXYING_API_USER: ${{ secrets.BOXYING_API_USER }}
           PUSHPLUS_TOKEN: ${{ secrets.PUSHPLUS_TOKEN }}
           # 如果你的脚本还需要其他变量（如 BASE_URL），也加在这里
-          BOXYING_BASE_URL: "http://new.xem8k5.top:3000/"
-        run: python checkin/xem/checkin.py
+          BOXYING_BASE_URL: "https://www.boxying.com/"
+        run: python checkin/boxying/checkin.py

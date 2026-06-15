@@ -38,6 +38,27 @@ read -p "N1NEMAN_ACCESS_TOKEN: " val
 read -p "N1NEMAN_API_USER: " val
 [ -n "$val" ] && gh secret set N1NEMAN_API_USER -b "$val"
 
+# ===== JIUUIJ =====
+read -p "JIUUIJ_ACCESS_TOKEN: " val
+[ -n "$val" ] && gh secret set JIUUIJ_ACCESS_TOKEN -b "$val"
+
+read -p "JIUUIJ_API_USER: " val
+[ -n "$val" ] && gh secret set JIUUIJ_API_USER -b "$val"
+
+# ===== ANYROUTER =====
+read -p "ANYROUTER_COOKIE: " val
+[ -n "$val" ] && gh secret set ANYROUTER_COOKIE -b "$val"
+
+read -p "ANYROUTER_API_USER: " val
+[ -n "$val" ] && gh secret set ANYROUTER_API_USER -b "$val"
+
+# ===== MUYUAN =====
+read -p "MUYUAN_ACCESS_TOKEN: " val
+[ -n "$val" ] && gh secret set MUYUAN_ACCESS_TOKEN -b "$val"
+
+read -p "MUYUAN_API_USER: " val
+[ -n "$val" ] && gh secret set MUYUAN_API_USER -b "$val"
+
 # ===== 通用推送 =====
 read -p "PUSHPLUS_TOKEN (可选): " val
 [ -n "$val" ] && gh secret set PUSHPLUS_TOKEN -b "$val"

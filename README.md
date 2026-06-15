@@ -9,6 +9,9 @@
 | [Boxying](https://www.boxying.com/register?aff=henf) | `checkin/boxying/checkin.py` | Session Cookie | `BOXYING_SESSION` `BOXYING_API_USER` |
 | [Elysiver](https://elysiver.h-e.top/register?aff=vGW7) | `checkin/elysiver/checkin.py` | 令牌 | `ELYSIVER_ACCESS_TOKEN` `ELYSIVER_API_USER` |
 | [N1Neman](https://mynewapi.n1neman.fun/) | `checkin/n1neman/checkin.py` | 令牌 | `N1NEMAN_ACCESS_TOKEN` `N1NEMAN_API_USER` |
+| [Jiuuij](https://jiuuij.de5.net/) | `checkin/jiuuij/checkin.py` | 令牌 | `JIUUIJ_ACCESS_TOKEN` `JIUUIJ_API_USER` |
+| [AnyRouter](https://anyrouter.top/) | `checkin/anyrouter/checkin.py` | Session Cookie | `ANYROUTER_COOKIE` `ANYROUTER_API_USER` |
+| [君の公益](https://muyuan.do/) | `checkin/muyuan/checkin.py` | 令牌 | `MUYUAN_ACCESS_TOKEN` `MUYUAN_API_USER` |
 
 ## 运行环境
 
@@ -55,6 +58,24 @@ pip install -r requirements.txt
 - `N1NEMAN_API_USER` — 用户 ID
 - `N1NEMAN_TIMEOUT` — 请求超时秒数，默认 `30`
 
+### Jiuuij
+
+- `JIUUIJ_ACCESS_TOKEN` — 系统访问令牌
+- `JIUUIJ_API_USER` — 用户 ID
+- `JIUUIJ_TIMEOUT` — 请求超时秒数，默认 `30`
+
+### AnyRouter
+
+- `ANYROUTER_COOKIE` — 浏览器 Cookie 字符串（多个 cookie 用 `; ` 连接）
+- `ANYROUTER_API_USER` — 用户 ID
+- `ANYROUTER_TIMEOUT` — 请求超时秒数，默认 `30`
+
+### 君の公益
+
+- `MUYUAN_ACCESS_TOKEN` — 系统访问令牌
+- `MUYUAN_API_USER` — 用户 ID
+- `MUYUAN_TIMEOUT` — 请求超时秒数，默认 `30`
+
 ## GitHub Actions 配置
 
 ### 方式一：使用脚本批量设置（推荐）
@@ -79,6 +100,12 @@ bash setup-secrets.sh
 | `ELYSIVER_API_USER` | Elysiver 用户 ID |
 | `N1NEMAN_ACCESS_TOKEN` | N1Neman 系统访问令牌 |
 | `N1NEMAN_API_USER` | N1Neman 用户 ID |
+| `JIUUIJ_ACCESS_TOKEN` | Jiuuij 系统访问令牌 |
+| `JIUUIJ_API_USER` | Jiuuij 用户 ID |
+| `ANYROUTER_COOKIE` | AnyRouter Cookie 字符串 |
+| `ANYROUTER_API_USER` | AnyRouter 用户 ID |
+| `MUYUAN_ACCESS_TOKEN` | 君の公益 系统访问令牌 |
+| `MUYUAN_API_USER` | 君の公益 用户 ID |
 | `PUSHPLUS_TOKEN` | PushPlus 推送 Token（可选） |
 
 ### 方式三：命令行设置
@@ -90,11 +117,14 @@ gh secret set BOXYING_API_USER -b "你的用户ID"
 
 ## 工作流
 
-当前仓库包含三个工作流文件：
+当前仓库包含六个工作流文件：
 
 - `.github/workflows/boxying.yml`
 - `.github/workflows/elysiver.yml`
 - `.github/workflows/n1neman.yml`
+- `.github/workflows/jiuuij.yml`
+- `.github/workflows/anyrouter.yml`
+- `.github/workflows/muyuan.yml`
 
 每个工作流在北京时间 9:00-12:00 之间触发，并随机延迟 0-180 分钟后执行签到，避免扎堆。也支持手动触发 `workflow_dispatch`。
 
@@ -106,6 +136,9 @@ PowerShell 示例：
 $env:BOXYING_SESSION="你的Session"; $env:BOXYING_API_USER="你的ID"; python checkin/boxying/checkin.py
 $env:ELYSIVER_ACCESS_TOKEN="你的令牌"; $env:ELYSIVER_API_USER="你的ID"; python checkin/elysiver/checkin.py
 $env:N1NEMAN_ACCESS_TOKEN="你的令牌"; $env:N1NEMAN_API_USER="你的ID"; python checkin/n1neman/checkin.py
+$env:JIUUIJ_ACCESS_TOKEN="你的令牌"; $env:JIUUIJ_API_USER="你的ID"; python checkin/jiuuij/checkin.py
+$env:ANYROUTER_COOKIE="你的Cookie"; $env:ANYROUTER_API_USER="你的ID"; python checkin/anyrouter/checkin.py
+$env:MUYUAN_ACCESS_TOKEN="你的令牌"; $env:MUYUAN_API_USER="你的ID"; python checkin/muyuan/checkin.py
 ```
 
 Git Bash 示例：

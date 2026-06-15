@@ -31,16 +31,6 @@ read -p "ELYSIVER_ACCESS_TOKEN: " val
 read -p "ELYSIVER_API_USER: " val
 [ -n "$val" ] && gh secret set ELYSIVER_API_USER -b "$val"
 
-# ===== HUAN666 =====
-read -p "HUAN666_ACCESS_TOKEN (可选): " val
-[ -n "$val" ] && gh secret set HUAN666_ACCESS_TOKEN -b "$val"
-
-read -p "HUAN666_SESSION (可选): " val
-[ -n "$val" ] && gh secret set HUAN666_SESSION -b "$val"
-
-read -p "HUAN666_API_USER: " val
-[ -n "$val" ] && gh secret set HUAN666_API_USER -b "$val"
-
 # ===== 通用推送 =====
 read -p "PUSHPLUS_TOKEN (可选): " val
 [ -n "$val" ] && gh secret set PUSHPLUS_TOKEN -b "$val"

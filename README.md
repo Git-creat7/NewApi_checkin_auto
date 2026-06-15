@@ -8,7 +8,6 @@
 |:-----|:--------|:--------|:------------|
 | [Boxying](https://www.boxying.com/register?aff=henf) | `checkin/boxying/checkin.py` | Session Cookie | `BOXYING_SESSION` `BOXYING_API_USER` |
 | [Elysiver](https://elysiver.h-e.top/register?aff=vGW7) | `checkin/elysiver/checkin.py` | 令牌 | `ELYSIVER_ACCESS_TOKEN` `ELYSIVER_API_USER` |
-| [Huan666](https://ai.huan666.de/register?aff=981F) | `checkin/huan666/checkin.py` | 令牌/Session | `HUAN666_ACCESS_TOKEN` `HUAN666_SESSION` `HUAN666_API_USER` |
 
 ## 运行环境
 
@@ -49,13 +48,6 @@ pip install -r requirements.txt
 - `ELYSIVER_API_USER` — 用户 ID
 - `ELYSIVER_TIMEOUT` — 请求超时秒数，默认 `30`
 
-### Huan666
-
-- `HUAN666_ACCESS_TOKEN` — 系统访问令牌（优先）
-- `HUAN666_SESSION` — Session Cookie（令牌失败时回退）
-- `HUAN666_API_USER` — 用户 ID
-- `HUAN666_TIMEOUT` — 请求超时秒数，默认 `30`
-
 ## GitHub Actions 配置
 
 ### 方式一：使用脚本批量设置（推荐）
@@ -78,9 +70,6 @@ bash setup-secrets.sh
 | `BOXYING_API_USER` | Boxying 用户 ID |
 | `ELYSIVER_ACCESS_TOKEN` | Elysiver 系统访问令牌 |
 | `ELYSIVER_API_USER` | Elysiver 用户 ID |
-| `HUAN666_ACCESS_TOKEN` | Huan666 系统访问令牌（可选） |
-| `HUAN666_SESSION` | Huan666 Session Cookie |
-| `HUAN666_API_USER` | Huan666 用户 ID |
 | `PUSHPLUS_TOKEN` | PushPlus 推送 Token（可选） |
 
 ### 方式三：命令行设置
@@ -92,11 +81,10 @@ gh secret set BOXYING_API_USER -b "你的用户ID"
 
 ## 工作流
 
-当前仓库包含三个工作流文件：
+当前仓库包含两个工作流文件：
 
 - `.github/workflows/boxying.yml`
 - `.github/workflows/elysiver.yml`
-- `.github/workflows/huan666.yml`
 
 每个工作流在北京时间 9:00-12:00 之间触发，并随机延迟 0-180 分钟后执行签到，避免扎堆。也支持手动触发 `workflow_dispatch`。
 

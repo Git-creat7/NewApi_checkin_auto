@@ -12,7 +12,6 @@
 | [Jiuuij](https://jiuuij.de5.net/) | `checkin/jiuuij/checkin.py` | 令牌 | `JIUUIJ_ACCESS_TOKEN` `JIUUIJ_API_USER` |
 | [AnyRouter](https://anyrouter.top/) | `checkin/anyrouter/checkin.py` | Session Cookie | `ANYROUTER_COOKIE` `ANYROUTER_API_USER` |
 | [君の公益](https://muyuan.do/) | `checkin/muyuan/checkin.py` | 令牌 | `MUYUAN_ACCESS_TOKEN` `MUYUAN_API_USER` |
-| [Sub2](https://sub.100xlabs.space/) | `checkin/sub2/checkin.py` | 令牌 | `SUB2_ACCESS_TOKEN` `SUB2_API_USER` |
 
 ## 运行环境
 
@@ -77,12 +76,6 @@ pip install -r requirements.txt
 - `MUYUAN_API_USER` — 用户 ID
 - `MUYUAN_TIMEOUT` — 请求超时秒数，默认 `30`
 
-### Sub2
-
-- `SUB2_ACCESS_TOKEN` — 系统访问令牌
-- `SUB2_API_USER` — 用户 ID
-- `SUB2_TIMEOUT` — 请求超时秒数，默认 `30`
-
 ## GitHub Actions 配置
 
 ### 方式一：使用脚本批量设置（推荐）
@@ -113,8 +106,6 @@ bash setup-secrets.sh
 | `ANYROUTER_API_USER` | AnyRouter 用户 ID |
 | `MUYUAN_ACCESS_TOKEN` | 君の公益 系统访问令牌 |
 | `MUYUAN_API_USER` | 君の公益 用户 ID |
-| `SUB2_ACCESS_TOKEN` | Sub2 系统访问令牌 |
-| `SUB2_API_USER` | Sub2 用户 ID |
 | `PUSHPLUS_TOKEN` | PushPlus 推送 Token（可选） |
 
 ### 方式三：命令行设置
@@ -126,7 +117,7 @@ gh secret set BOXYING_API_USER -b "你的用户ID"
 
 ## 工作流
 
-当前仓库包含七个工作流文件：
+当前仓库包含六个工作流文件：
 
 - `.github/workflows/boxying.yml`
 - `.github/workflows/elysiver.yml`
@@ -134,7 +125,6 @@ gh secret set BOXYING_API_USER -b "你的用户ID"
 - `.github/workflows/jiuuij.yml`
 - `.github/workflows/anyrouter.yml`
 - `.github/workflows/muyuan.yml`
-- `.github/workflows/sub2.yml`
 
 每个工作流在北京时间 9:00-12:00 之间触发，并随机延迟 0-180 分钟后执行签到，避免扎堆。也支持手动触发 `workflow_dispatch`。
 
@@ -149,7 +139,6 @@ $env:N1NEMAN_ACCESS_TOKEN="你的令牌"; $env:N1NEMAN_API_USER="你的ID"; pyth
 $env:JIUUIJ_ACCESS_TOKEN="你的令牌"; $env:JIUUIJ_API_USER="你的ID"; python checkin/jiuuij/checkin.py
 $env:ANYROUTER_COOKIE="你的Cookie"; $env:ANYROUTER_API_USER="你的ID"; python checkin/anyrouter/checkin.py
 $env:MUYUAN_ACCESS_TOKEN="你的令牌"; $env:MUYUAN_API_USER="你的ID"; python checkin/muyuan/checkin.py
-$env:SUB2_ACCESS_TOKEN="你的令牌"; $env:SUB2_API_USER="你的ID"; python checkin/sub2/checkin.py
 ```
 
 Git Bash 示例：

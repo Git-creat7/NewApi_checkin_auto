@@ -59,13 +59,6 @@ read -p "MUYUAN_ACCESS_TOKEN: " val
 read -p "MUYUAN_API_USER: " val
 [ -n "$val" ] && gh secret set MUYUAN_API_USER -b "$val"
 
-# ===== SUB2 =====
-read -p "SUB2_ACCESS_TOKEN: " val
-[ -n "$val" ] && gh secret set SUB2_ACCESS_TOKEN -b "$val"
-
-read -p "SUB2_API_USER: " val
-[ -n "$val" ] && gh secret set SUB2_API_USER -b "$val"
-
 # ===== 通用推送 =====
 read -p "PUSHPLUS_TOKEN (可选): " val
 [ -n "$val" ] && gh secret set PUSHPLUS_TOKEN -b "$val"

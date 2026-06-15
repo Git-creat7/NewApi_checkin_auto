@@ -68,7 +68,9 @@ pip install -r requirements.txt
 
 - `ANYROUTER_COOKIE` — 浏览器 Cookie 字符串（多个 cookie 用 `; ` 连接）
 - `ANYROUTER_API_USER` — 用户 ID
-- `ANYROUTER_TIMEOUT` — 请求超时秒数，默认 `30`
+- `ANYROUTER_TIMEOUT` — 请求超时秒数，默认 `60`
+
+> 说明：AnyRouter 启用了 WAF JS 挑战，脚本使用 Playwright 真实浏览器自动过盾，因此 GitHub Actions 运行时会长一些并自动安装 Chromium。
 
 ### 君の公益
 

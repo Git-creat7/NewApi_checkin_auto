@@ -8,6 +8,7 @@
 |:-----|:--------|:--------|:------------|
 | [Boxying](https://www.boxying.com/register?aff=henf) | `checkin/boxying/checkin.py` | Session Cookie | `BOXYING_SESSION` `BOXYING_API_USER` |
 | [Elysiver](https://elysiver.h-e.top/register?aff=vGW7) | `checkin/elysiver/checkin.py` | 令牌 | `ELYSIVER_ACCESS_TOKEN` `ELYSIVER_API_USER` |
+| [N1Neman](https://mynewapi.n1neman.fun/) | `checkin/n1neman/checkin.py` | 令牌 | `N1NEMAN_ACCESS_TOKEN` `N1NEMAN_API_USER` |
 
 ## 运行环境
 
@@ -48,6 +49,12 @@ pip install -r requirements.txt
 - `ELYSIVER_API_USER` — 用户 ID
 - `ELYSIVER_TIMEOUT` — 请求超时秒数，默认 `30`
 
+### N1Neman
+
+- `N1NEMAN_ACCESS_TOKEN` — 系统访问令牌
+- `N1NEMAN_API_USER` — 用户 ID
+- `N1NEMAN_TIMEOUT` — 请求超时秒数，默认 `30`
+
 ## GitHub Actions 配置
 
 ### 方式一：使用脚本批量设置（推荐）
@@ -70,6 +77,8 @@ bash setup-secrets.sh
 | `BOXYING_API_USER` | Boxying 用户 ID |
 | `ELYSIVER_ACCESS_TOKEN` | Elysiver 系统访问令牌 |
 | `ELYSIVER_API_USER` | Elysiver 用户 ID |
+| `N1NEMAN_ACCESS_TOKEN` | N1Neman 系统访问令牌 |
+| `N1NEMAN_API_USER` | N1Neman 用户 ID |
 | `PUSHPLUS_TOKEN` | PushPlus 推送 Token（可选） |
 
 ### 方式三：命令行设置
@@ -81,10 +90,11 @@ gh secret set BOXYING_API_USER -b "你的用户ID"
 
 ## 工作流
 
-当前仓库包含两个工作流文件：
+当前仓库包含三个工作流文件：
 
 - `.github/workflows/boxying.yml`
 - `.github/workflows/elysiver.yml`
+- `.github/workflows/n1neman.yml`
 
 每个工作流在北京时间 9:00-12:00 之间触发，并随机延迟 0-180 分钟后执行签到，避免扎堆。也支持手动触发 `workflow_dispatch`。
 
@@ -95,6 +105,7 @@ PowerShell 示例：
 ```powershell
 $env:BOXYING_SESSION="你的Session"; $env:BOXYING_API_USER="你的ID"; python checkin/boxying/checkin.py
 $env:ELYSIVER_ACCESS_TOKEN="你的令牌"; $env:ELYSIVER_API_USER="你的ID"; python checkin/elysiver/checkin.py
+$env:N1NEMAN_ACCESS_TOKEN="你的令牌"; $env:N1NEMAN_API_USER="你的ID"; python checkin/n1neman/checkin.py
 ```
 
 Git Bash 示例：

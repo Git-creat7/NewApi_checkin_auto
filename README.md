@@ -7,11 +7,8 @@
 | 平台 | 脚本路径 | 认证方式 | 主要环境变量 |
 |:-----|:--------|:--------|:------------|
 | [Boxying](https://www.boxying.com/register?aff=henf) | `checkin/boxying/checkin.py` | Session Cookie | `BOXYING_SESSION` `BOXYING_API_USER` |
-| [ABRDNS](https://new-api.abrdns.com/register?aff=u50m) | `checkin/abrdns/checkin.py` | 令牌 | `ABRDNS_ACCESS_TOKEN` `ABRDNS_API_USER` |
-| [AINI8](https://api.aini8.com/register?aff=7pbI) | `checkin/aini8/checkin.py` | 令牌 | `AINI8_ACCESS_TOKEN` `AINI8_API_USER` |
 | [Elysiver](https://elysiver.h-e.top/register?aff=vGW7) | `checkin/elysiver/checkin.py` | 令牌 | `ELYSIVER_ACCESS_TOKEN` `ELYSIVER_API_USER` |
 | [Huan666](https://ai.huan666.de/register?aff=981F) | `checkin/huan666/checkin.py` | 令牌/Session | `HUAN666_ACCESS_TOKEN` `HUAN666_SESSION` `HUAN666_API_USER` |
-| [XEM](http://new.xem8k5.top:3000/register?aff=Byib) | `checkin/xem/checkin.py` | 令牌/Session | `XEM_SYSTEM_ACCESS_TOKEN` `XEM_SESSION` `XEM_API_USER` |
 
 ## 运行环境
 
@@ -38,25 +35,13 @@ pip install -r requirements.txt
 
 ### 通用（可选）
 
-- `PUSHPLUS_TOKEN` — PushPlus 推送 Token（仅 Boxying 和 XEM 脚本支持）
+- `PUSHPLUS_TOKEN` — PushPlus 推送 Token（仅 Boxying 脚本支持）
 
 ### Boxying
 
 - `BOXYING_SESSION` — 浏览器 Cookie 中的 `session`
 - `BOXYING_API_USER` — 用户 ID
 - `BOXYING_TIMEOUT` — 请求超时秒数，默认 `30`
-
-### ABRDNS
-
-- `ABRDNS_ACCESS_TOKEN` — 系统访问令牌
-- `ABRDNS_API_USER` — 用户 ID
-- `ABRDNS_TIMEOUT` — 请求超时秒数，默认 `30`
-
-### AINI8
-
-- `AINI8_ACCESS_TOKEN` — 系统访问令牌
-- `AINI8_API_USER` — 用户 ID
-- `AINI8_TIMEOUT` — 请求超时秒数，默认 `30`
 
 ### Elysiver
 
@@ -70,13 +55,6 @@ pip install -r requirements.txt
 - `HUAN666_SESSION` — Session Cookie（令牌失败时回退）
 - `HUAN666_API_USER` — 用户 ID
 - `HUAN666_TIMEOUT` — 请求超时秒数，默认 `30`
-
-### XEM
-
-- `XEM_SYSTEM_ACCESS_TOKEN` — 系统访问令牌（优先）
-- `XEM_SESSION` — Session Cookie（令牌失败时回退）
-- `XEM_API_USER` — 用户 ID
-- `XEM_TIMEOUT` — 请求超时秒数，默认 `30`
 
 ## GitHub Actions 配置
 
@@ -98,37 +76,27 @@ bash setup-secrets.sh
 |:------------|:-----|
 | `BOXYING_SESSION` | Boxying 登录 Session |
 | `BOXYING_API_USER` | Boxying 用户 ID |
-| `ABRDNS_ACCESS_TOKEN` | ABRDNS 系统访问令牌 |
-| `ABRDNS_API_USER` | ABRDNS 用户 ID |
-| `AINI8_ACCESS_TOKEN` | AINI8 系统访问令牌 |
-| `AINI8_API_USER` | AINI8 用户 ID |
 | `ELYSIVER_ACCESS_TOKEN` | Elysiver 系统访问令牌 |
 | `ELYSIVER_API_USER` | Elysiver 用户 ID |
 | `HUAN666_ACCESS_TOKEN` | Huan666 系统访问令牌（可选） |
 | `HUAN666_SESSION` | Huan666 Session Cookie |
 | `HUAN666_API_USER` | Huan666 用户 ID |
-| `XEM_SYSTEM_ACCESS_TOKEN` | XEM 系统访问令牌（可选） |
-| `XEM_SESSION` | XEM Session Cookie |
-| `XEM_API_USER` | XEM 用户 ID |
 | `PUSHPLUS_TOKEN` | PushPlus 推送 Token（可选） |
 
 ### 方式三：命令行设置
 
 ```bash
-gh secret set ABRDNS_ACCESS_TOKEN -b "你的令牌"
-gh secret set ABRDNS_API_USER -b "你的用户ID"
+gh secret set BOXYING_SESSION -b "你的Session"
+gh secret set BOXYING_API_USER -b "你的用户ID"
 ```
 
 ## 工作流
 
-当前仓库包含六个工作流文件：
+当前仓库包含三个工作流文件：
 
 - `.github/workflows/boxying.yml`
-- `.github/workflows/abrdns.yml`
-- `.github/workflows/aini8.yml`
 - `.github/workflows/elysiver.yml`
 - `.github/workflows/huan666.yml`
-- `.github/workflows/xem.yml`
 
 每个工作流在北京时间 9:00-12:00 之间触发，并随机延迟 0-180 分钟后执行签到，避免扎堆。也支持手动触发 `workflow_dispatch`。
 
@@ -137,15 +105,14 @@ gh secret set ABRDNS_API_USER -b "你的用户ID"
 PowerShell 示例：
 
 ```powershell
-$env:ABRDNS_ACCESS_TOKEN="你的令牌"; $env:ABRDNS_API_USER="你的ID"; python checkin/abrdns/checkin.py
-$env:AINI8_ACCESS_TOKEN="你的令牌"; $env:AINI8_API_USER="你的ID"; python checkin/aini8/checkin.py
+$env:BOXYING_SESSION="你的Session"; $env:BOXYING_API_USER="你的ID"; python checkin/boxying/checkin.py
 $env:ELYSIVER_ACCESS_TOKEN="你的令牌"; $env:ELYSIVER_API_USER="你的ID"; python checkin/elysiver/checkin.py
 ```
 
 Git Bash 示例：
 
 ```bash
-ABRDNS_ACCESS_TOKEN="你的令牌" ABRDNS_API_USER="你的ID" python checkin/abrdns/checkin.py
+BOXYING_SESSION="你的Session" BOXYING_API_USER="你的ID" python checkin/boxying/checkin.py
 ```
 
 ## 免责声明

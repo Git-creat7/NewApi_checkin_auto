@@ -24,27 +24,6 @@ read -p "BOXYING_SESSION: " val
 read -p "BOXYING_API_USER: " val
 [ -n "$val" ] && gh secret set BOXYING_API_USER -b "$val"
 
-# ===== XEM =====
-read -p "XEM_SYSTEM_ACCESS_TOKEN: " val
-[ -n "$val" ] && gh secret set XEM_SYSTEM_ACCESS_TOKEN -b "$val"
-
-read -p "XEM_API_USER: " val
-[ -n "$val" ] && gh secret set XEM_API_USER -b "$val"
-
-# ===== ABRDNS =====
-read -p "ABRDNS_ACCESS_TOKEN: " val
-[ -n "$val" ] && gh secret set ABRDNS_ACCESS_TOKEN -b "$val"
-
-read -p "ABRDNS_API_USER: " val
-[ -n "$val" ] && gh secret set ABRDNS_API_USER -b "$val"
-
-# ===== AINI8 =====
-read -p "AINI8_ACCESS_TOKEN: " val
-[ -n "$val" ] && gh secret set AINI8_ACCESS_TOKEN -b "$val"
-
-read -p "AINI8_API_USER: " val
-[ -n "$val" ] && gh secret set AINI8_API_USER -b "$val"
-
 # ===== ELYSIVER =====
 read -p "ELYSIVER_ACCESS_TOKEN: " val
 [ -n "$val" ] && gh secret set ELYSIVER_ACCESS_TOKEN -b "$val"

@@ -50,7 +50,8 @@ def ensure_json(text: str, label: str) -> dict:
     return data
 
 
-def main() -> int:
+def main() -> dict:
+    result = {"platform": "AnyRouter", "success": False, "message": "", "reward": None, "balance": None}
     if not COOKIE:
         raise ApiError("ANYROUTER_COOKIE is required.")
     if not API_USER:
@@ -96,15 +97,19 @@ def main() -> int:
                 f"返回用户 id={user.get('id')} 与配置的 ANYROUTER_API_USER={API_USER} 不一致。"
             )
 
+        result["success"] = True
+        result["balance"] = user.get("quota")
+        result["message"] = "登录成功"
         print("✅ 登录成功（AnyRouter 只需保持登录即可）")
 
         browser.close()
-    return 0
+    return result
 
 
 if __name__ == "__main__":
     try:
-        raise SystemExit(main())
+        r = main()
+        raise SystemExit(0 if r["success"] else 1)
     except ApiError as exc:
         print(f"❌ {exc}", file=sys.stderr)
         raise SystemExit(1)

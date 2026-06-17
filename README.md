@@ -119,7 +119,11 @@ gh secret set BOXYING_API_USER -b "你的用户ID"
 
 ## 工作流
 
-当前仓库包含六个工作流文件：
+推荐使用统一工作流 `checkin-all.yml`，在一个 job 中顺序完成所有平台签到，汇总结果通过 PushPlus 推送一次：
+
+- `.github/workflows/checkin-all.yml` — 统一签到 + 汇总推送
+
+也保留了各平台独立工作流（可单独使用）：
 
 - `.github/workflows/boxying.yml`
 - `.github/workflows/elysiver.yml`
@@ -129,6 +133,12 @@ gh secret set BOXYING_API_USER -b "你的用户ID"
 - `.github/workflows/muyuan.yml`
 
 每个工作流在北京时间 9:00-12:00 之间触发，并随机延迟 0-180 分钟后执行签到，避免扎堆。也支持手动触发 `workflow_dispatch`。
+
+## PushPlus 推送
+
+统一工作流会在所有平台签到完成后，通过 PushPlus 发送一条汇总消息，包含各平台的签到状态、今日奖励和当前余额。
+
+需配置 Secret `PUSHPLUS_TOKEN`。未配置则跳过推送。
 
 ## 本地运行
 
@@ -141,6 +151,12 @@ $env:N1NEMAN_ACCESS_TOKEN="你的令牌"; $env:N1NEMAN_API_USER="你的ID"; pyth
 $env:JIUUIJ_ACCESS_TOKEN="你的令牌"; $env:JIUUIJ_API_USER="你的ID"; python checkin/jiuuij/checkin.py
 $env:ANYROUTER_COOKIE="你的Cookie"; $env:ANYROUTER_API_USER="你的ID"; python checkin/anyrouter/checkin.py
 $env:MUYUAN_ACCESS_TOKEN="你的令牌"; $env:MUYUAN_API_USER="你的ID"; python checkin/muyuan/checkin.py
+```
+
+统一签到 + 推送：
+
+```powershell
+$env:PUSHPLUS_TOKEN="你的Token"; python checkin_all.py
 ```
 
 Git Bash 示例：

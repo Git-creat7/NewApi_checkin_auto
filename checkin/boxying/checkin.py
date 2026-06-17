@@ -143,18 +143,22 @@ def extract_today_reward(status: dict) -> int | None:
     return None
 
 
-def run_once(include_api_user: bool) -> int:
+def run_once(include_api_user: bool) -> dict:
+    result = {"platform": "Boxying", "success": False, "message": "", "reward": None, "balance": None}
     session = make_session(include_api_user=include_api_user)
 
     site_status = fetch_site_status(session)
     if not site_status.get("checkin_enabled"):
         print("ℹ️ 签到功能未开启")
-        return 0
+        result["success"] = True
+        result["message"] = "签到功能未开启"
+        return result
     if site_status.get("turnstile_check"):
         print("⚠️ 站点启用了 Turnstile，继续尝试使用现有 session 签到...")
 
     user = fetch_self(session)
     print(f"当前账号: id={user.get('id')} display_name={user.get('display_name')}")
+    result["balance"] = user.get("quota")
 
     status = fetch_checkin_status(session)
     if status.get("success"):
@@ -164,7 +168,9 @@ def run_once(include_api_user: bool) -> int:
             print(
                 f"✅ 今日已签到，累计={stats.get('total_checkins')}，总额度={stats.get('total_quota')/500000}"
             )
-            return 0
+            result["success"] = True
+            result["message"] = f"今日已签到，累计={stats.get('total_checkins')}"
+            return result
         if data.get("can_checkin") is False:
             raise ApiError(
                 f"当前账号未达到签到门槛: current_topup_amount={data.get('current_topup_amount')} "
@@ -172,13 +178,15 @@ def run_once(include_api_user: bool) -> int:
             )
     before_total_quota = extract_stats(status).get("total_quota")
 
-    result = post_checkin(session, status=status)
-    message = result.get("message") or result.get("msg") or ""
-    success = bool(result.get("success") or result.get("ret") == 1)
+    checkin_resp = post_checkin(session, status=status)
+    message = checkin_resp.get("message") or checkin_resp.get("msg") or ""
+    success = bool(checkin_resp.get("success") or checkin_resp.get("ret") == 1)
 
     if not success and ("已经签到" in message or "已签到" in message):
         print(f"✅ 今日已签到: {message}")
-        return 0
+        result["success"] = True
+        result["message"] = message
+        return result
 
     if not success and "turnstile" in message.lower():
         raise ApiError(f"签到失败，需要 Turnstile 验证: {message}")
@@ -198,43 +206,34 @@ def run_once(include_api_user: bool) -> int:
         except (TypeError, ValueError):
             today_awarded = None
 
+    result["success"] = True
+    result["reward"] = today_awarded
     if today_awarded is not None:
         print(
             f"✅ 签到成功！今日奖励={today_awarded}，累计签到={after_stats.get('total_checkins')}，累计获得={after_total_quota}"
         )
+        result["message"] = f"签到成功，今日奖励={today_awarded}"
     else:
-        print(f"✅ 签到成功: {message or result}")
-    return 0
+        print(f"✅ 签到成功: {message or checkin_resp}")
+        result["message"] = message or "签到成功"
+    return result
 
 
-def main() -> int:
+def main() -> dict:
     try:
-        code = run_once(include_api_user=True)
-        send_pushplus(
-            "Boxying 签到结果",
-            f"### Boxying 签到成功\n\n- 站点: `{BASE_URL}`\n- 时间: `{current_day()}`",
-        )
-        return code
+        return run_once(include_api_user=True)
     except ApiError as exc:
         msg = str(exc)
         if API_USER and "insufficient privileges" in msg.lower():
             print("⚠️ 使用 new-api-user 头失败，尝试仅凭 session 重试一次...")
-            code = run_once(include_api_user=False)
-            send_pushplus(
-                "Boxying 签到结果",
-                f"### Boxying 签到成功\n\n- 站点: `{BASE_URL}`\n- 时间: `{current_day()}`\n- 备注: `new-api-user` 回退为仅使用 session",
-            )
-            return code
-        send_pushplus(
-            "Boxying 签到失败",
-            f"### Boxying 签到失败\n\n- 站点: `{BASE_URL}`\n- 时间: `{current_day()}`\n- 错误: `{msg}`",
-        )
+            return run_once(include_api_user=False)
         raise
 
 
 if __name__ == "__main__":
     try:
-        raise SystemExit(main())
+        r = main()
+        raise SystemExit(0 if r["success"] else 1)
     except ApiError as exc:
         print(f"❌ {exc}", file=sys.stderr)
         raise SystemExit(1)

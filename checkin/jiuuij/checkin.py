@@ -62,40 +62,49 @@ def post_checkin(session: requests.Session) -> dict:
     return ensure_json(session.post(f"{BASE_URL}/api/user/checkin"), "签到")
 
 
-def main() -> int:
+def main() -> dict:
+    result = {"platform": "Jiuuij", "success": False, "message": "", "reward": None, "balance": None}
     session = make_session()
 
     user = fetch_self(session)
     print(f"当前账号: id={user.get('id')} name={user.get('display_name')}")
+    result["balance"] = user.get("quota")
 
-    result = post_checkin(session)
-    message = result.get("message") or result.get("msg") or ""
-    success = bool(result.get("success") or result.get("ret") == 1)
+    checkin_result = post_checkin(session)
+    message = checkin_result.get("message") or checkin_result.get("msg") or ""
+    success = bool(checkin_result.get("success") or checkin_result.get("ret") == 1)
 
     if not success and ("已经签到" in message or "已签到" in message):
         print(f"✅ 今日已签到: {message}")
-        return 0
+        result["success"] = True
+        result["message"] = message
+        return result
 
     if not success:
         raise ApiError(message or "Check-in failed.")
 
-    reward = result.get("data")
+    reward = checkin_result.get("data")
     if reward is not None:
         try:
             reward = int(reward)
         except (TypeError, ValueError):
             reward = None
 
+    result["success"] = True
+    result["reward"] = reward
     if reward is not None:
         print(f"✅ 签到成功！今日奖励={reward}")
+        result["message"] = f"签到成功，今日奖励={reward}"
     else:
-        print(f"✅ 签到成功: {message or result}")
-    return 0
+        print(f"✅ 签到成功: {message or checkin_result}")
+        result["message"] = message or "签到成功"
+    return result
 
 
 if __name__ == "__main__":
     try:
-        raise SystemExit(main())
+        r = main()
+        raise SystemExit(0 if r["success"] else 1)
     except ApiError as exc:
         print(f"❌ {exc}", file=sys.stderr)
         raise SystemExit(1)

@@ -3,9 +3,9 @@ name: checkin-all
 on:
   workflow_dispatch:
   schedule:
-    # 北京时间 9:00-12:00 对应 UTC 1:00-4:00
-    # 每天触发一次，再随机延迟 0-180 分钟
-    - cron: '0 1 * * *'
+    # UTC 3:00 = 北京时间 11:00
+    # 随机延迟 10-110 分钟，覆盖 11:10-12:50
+    - cron: '0 3 * * *'
 
 jobs:
   checkin:
@@ -26,11 +26,11 @@ jobs:
           pip install -r requirements.txt
           playwright install chromium
 
-      - name: Random delay (0-180 min)
+      - name: Random delay (10-110 min)
         run: |
-          DELAY=$(python3 -c "import random; print(random.randint(0, 180))")
+          DELAY=$(python3 -c "import random; print(random.randint(10, 110))")
           echo "随机延迟 $DELAY 分钟"
-          sleep $DELAY
+          sleep $((DELAY * 60))
 
       - name: Run all checkins
         env:

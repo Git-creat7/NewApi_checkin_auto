@@ -119,20 +119,13 @@ gh secret set BOXYING_API_USER -b "你的用户ID"
 
 ## 工作流
 
-推荐使用统一工作流 `checkin-all.yml`，在一个 job 中顺序完成所有平台签到，汇总结果通过 PushPlus 推送一次：
+只有一个统一工作流，每天运行一次：
 
 - `.github/workflows/checkin-all.yml` — 统一签到 + 汇总推送
 
-也保留了各平台独立工作流（可单独使用）：
+触发时间：UTC 3:00（北京时间 11:00），再随机延迟 10-110 分钟，实际执行时间在北京时间 **11:10-12:50** 之间随机。
 
-- `.github/workflows/boxying.yml`
-- `.github/workflows/elysiver.yml`
-- `.github/workflows/n1neman.yml`
-- `.github/workflows/jiuuij.yml`
-- `.github/workflows/anyrouter.yml`
-- `.github/workflows/muyuan.yml`
-
-每个工作流在北京时间 9:00-12:00 之间触发，并随机延迟 0-180 分钟后执行签到，避免扎堆。也支持手动触发 `workflow_dispatch`。
+也支持手动触发 `workflow_dispatch`。
 
 ## PushPlus 推送
 

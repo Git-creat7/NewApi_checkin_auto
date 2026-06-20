@@ -1,11 +1,8 @@
 
-# 本地重复签到测试：token测试通过
-
 #!/usr/bin/env python3
 import os
 import sys
 
-# Windows 控制台 UTF-8 输出
 if sys.platform == "win32":
     sys.stdout.reconfigure(encoding="utf-8")
     sys.stderr.reconfigure(encoding="utf-8")
@@ -13,10 +10,10 @@ if sys.platform == "win32":
 from curl_cffi import requests
 
 
-BASE_URL = os.getenv("JIUUIJ_BASE_URL", "https://jiuuij.de5.net").rstrip("/")
-ACCESS_TOKEN = os.getenv("JIUUIJ_ACCESS_TOKEN", "").strip()
-API_USER = os.getenv("JIUUIJ_API_USER", "").strip()
-TIMEOUT = int(os.getenv("JIUUIJ_TIMEOUT", "30"))
+BASE_URL = os.getenv("R7FIT_BASE_URL", "https://api.7r.fit").rstrip("/")
+ACCESS_TOKEN = os.getenv("R7FIT_ACCESS_TOKEN", "").strip()
+API_USER = os.getenv("R7FIT_API_USER", "").strip()
+TIMEOUT = int(os.getenv("R7FIT_TIMEOUT", "30"))
 
 
 class ApiError(RuntimeError):
@@ -25,9 +22,9 @@ class ApiError(RuntimeError):
 
 def make_session() -> requests.Session:
     if not ACCESS_TOKEN:
-        raise ApiError("JIUUIJ_ACCESS_TOKEN is required.")
+        raise ApiError("R7FIT_ACCESS_TOKEN is required.")
     if not API_USER:
-        raise ApiError("JIUUIJ_API_USER is required.")
+        raise ApiError("R7FIT_API_USER is required.")
 
     session = requests.Session(impersonate="chrome124", timeout=TIMEOUT)
     session.headers.update(
@@ -63,7 +60,7 @@ def post_checkin(session: requests.Session) -> dict:
 
 
 def main() -> dict:
-    result = {"platform": "Jiuuij", "success": False, "message": "", "reward": None, "balance": None}
+    result = {"platform": "7RFit", "success": False, "message": "", "reward": None, "balance": None}
     session = make_session()
 
     user_before = fetch_self(session)

@@ -66,37 +66,51 @@ def main() -> dict:
     result = {"platform": "N1Neman", "success": False, "message": "", "reward": None, "balance": None}
     session = make_session()
 
-    user = fetch_self(session)
-    print(f"当前账号: id={user.get('id')} name={user.get('display_name')}")
-    result["balance"] = user.get("quota")
+    user_before = fetch_self(session)
+    print(f"当前账号: id={user_before.get('id')} name={user_before.get('display_name')}")
+    quota_before = user_before.get("quota")
 
-    checkin_result = post_checkin(session)
-    message = checkin_result.get("message") or checkin_result.get("msg") or ""
-    success = bool(checkin_result.get("success") or checkin_result.get("ret") == 1)
+    checkin_resp = post_checkin(session)
+    message = checkin_resp.get("message") or checkin_resp.get("msg") or ""
+    success = bool(checkin_resp.get("success") or checkin_resp.get("ret") == 1)
 
-    if not success and ("已经签到" in message or "已签到" in message):
-        print(f"✅ 今日已签到: {message}")
+    already = not success and ("已经签到" in message or "已签到" in message)
+    if already:
         result["success"] = True
+        result["balance"] = quota_before
         result["message"] = message
+        print(f"✅ 今日已签到: {message}")
         return result
 
     if not success:
         raise ApiError(message or "Check-in failed.")
 
-    reward = checkin_result.get("data")
-    if reward is not None:
-        try:
-            reward = int(reward)
-        except (TypeError, ValueError):
-            reward = None
+    user_after = fetch_self(session)
+    quota_after = user_after.get("quota")
 
+    reward_from_api = checkin_resp.get("data")
+    if reward_from_api is not None:
+        try:
+            reward_from_api = int(reward_from_api)
+        except (TypeError, ValueError):
+            reward_from_api = None
+
+    reward_diff = None
+    if quota_before is not None and quota_after is not None:
+        try:
+            reward_diff = int(quota_after) - int(quota_before)
+        except (TypeError, ValueError):
+            reward_diff = None
+
+    reward = reward_from_api if reward_from_api is not None else reward_diff
     result["success"] = True
     result["reward"] = reward
+    result["balance"] = quota_after
     if reward is not None:
         print(f"✅ 签到成功！今日奖励={reward}")
         result["message"] = f"签到成功，今日奖励={reward}"
     else:
-        print(f"✅ 签到成功: {message or checkin_result}")
+        print(f"✅ 签到成功: {message or checkin_resp}")
         result["message"] = message or "签到成功"
     return result
 

@@ -20,6 +20,7 @@ PLATFORMS = [
     ("n1neman", "checkin.n1neman.checkin"),
     ("jiuuij", "checkin.jiuuij.checkin"),
     ("muyuan", "checkin.muyuan.checkin"),
+    ("7rfit", "checkin.7rfit.checkin"),
     ("anyrouter", "checkin.anyrouter.checkin"),
 ]
 

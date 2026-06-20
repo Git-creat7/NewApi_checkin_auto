@@ -59,6 +59,13 @@ read -p "MUYUAN_ACCESS_TOKEN: " val
 read -p "MUYUAN_API_USER: " val
 [ -n "$val" ] && gh secret set MUYUAN_API_USER -b "$val"
 
+# ===== 7RFIT =====
+read -p "R7FIT_ACCESS_TOKEN: " val
+[ -n "$val" ] && gh secret set R7FIT_ACCESS_TOKEN -b "$val"
+
+read -p "R7FIT_API_USER: " val
+[ -n "$val" ] && gh secret set R7FIT_API_USER -b "$val"
+
 # ===== 通用推送 =====
 read -p "PUSHPLUS_TOKEN (可选): " val
 [ -n "$val" ] && gh secret set PUSHPLUS_TOKEN -b "$val"

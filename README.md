@@ -12,6 +12,7 @@
 | [Jiuuij](https://jiuuij.de5.net/) | `checkin/jiuuij/checkin.py` | 令牌 | `JIUUIJ_ACCESS_TOKEN` `JIUUIJ_API_USER` |
 | [AnyRouter](https://anyrouter.top/) | `checkin/anyrouter/checkin.py` | Session Cookie | `ANYROUTER_COOKIE` `ANYROUTER_API_USER` |
 | [君の公益](https://muyuan.do/) | `checkin/muyuan/checkin.py` | 令牌 | `MUYUAN_ACCESS_TOKEN` `MUYUAN_API_USER` |
+| [7RFit](https://api.7r.fit/) | `checkin/7rfit/checkin.py` | 令牌 | `R7FIT_ACCESS_TOKEN` `R7FIT_API_USER` |
 
 ## 运行环境
 
@@ -78,6 +79,12 @@ pip install -r requirements.txt
 - `MUYUAN_API_USER` — 用户 ID
 - `MUYUAN_TIMEOUT` — 请求超时秒数，默认 `30`
 
+### 7RFit
+
+- `R7FIT_ACCESS_TOKEN` — 系统访问令牌
+- `R7FIT_API_USER` — 用户 ID
+- `R7FIT_TIMEOUT` — 请求超时秒数，默认 `30`
+
 ## GitHub Actions 配置
 
 ### 方式一：使用脚本批量设置（推荐）
@@ -108,6 +115,8 @@ bash setup-secrets.sh
 | `ANYROUTER_API_USER` | AnyRouter 用户 ID |
 | `MUYUAN_ACCESS_TOKEN` | 君の公益 系统访问令牌 |
 | `MUYUAN_API_USER` | 君の公益 用户 ID |
+| `R7FIT_ACCESS_TOKEN` | 7RFit 系统访问令牌 |
+| `R7FIT_API_USER` | 7RFit 用户 ID |
 | `PUSHPLUS_TOKEN` | PushPlus 推送 Token（可选） |
 
 ### 方式三：命令行设置

@@ -45,13 +45,6 @@ read -p "JIUUIJ_ACCESS_TOKEN: " val
 read -p "JIUUIJ_API_USER: " val
 [ -n "$val" ] && gh secret set JIUUIJ_API_USER -b "$val"
 
-# ===== ANYROUTER =====
-read -p "ANYROUTER_COOKIE: " val
-[ -n "$val" ] && gh secret set ANYROUTER_COOKIE -b "$val"
-
-read -p "ANYROUTER_API_USER: " val
-[ -n "$val" ] && gh secret set ANYROUTER_API_USER -b "$val"
-
 # ===== MUYUAN =====
 read -p "MUYUAN_ACCESS_TOKEN: " val
 [ -n "$val" ] && gh secret set MUYUAN_ACCESS_TOKEN -b "$val"

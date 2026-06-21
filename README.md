@@ -10,7 +10,6 @@
 | [Elysiver](https://elysiver.h-e.top/register?aff=vGW7) | `checkin/elysiver/checkin.py` | 令牌 | `ELYSIVER_ACCESS_TOKEN` `ELYSIVER_API_USER` |
 | [N1Neman](https://mynewapi.n1neman.fun/) | `checkin/n1neman/checkin.py` | 令牌 | `N1NEMAN_ACCESS_TOKEN` `N1NEMAN_API_USER` |
 | [Jiuuij](https://jiuuij.de5.net/) | `checkin/jiuuij/checkin.py` | 令牌 | `JIUUIJ_ACCESS_TOKEN` `JIUUIJ_API_USER` |
-| [AnyRouter](https://anyrouter.top/) | `checkin/anyrouter/checkin.py` | Session Cookie | `ANYROUTER_COOKIE` `ANYROUTER_API_USER` |
 | [君の公益](https://muyuan.do/) | `checkin/muyuan/checkin.py` | 令牌 | `MUYUAN_ACCESS_TOKEN` `MUYUAN_API_USER` |
 | [7RFit](https://api.7r.fit/) | `checkin/7rfit/checkin.py` | 令牌 | `R7FIT_ACCESS_TOKEN` `R7FIT_API_USER` |
 | [Maoyulin](https://maoyulin.xyz/) | `checkin/maoyulin/checkin.py` | 令牌 | `MAOYULIN_ACCESS_TOKEN` `MAOYULIN_API_USER` |
@@ -32,6 +31,8 @@ pip install -r requirements.txt
 
 需要同时提供 `*_API_USER`（用户 ID），可从浏览器 F12 → Application → Local Storage → `user` → `id` 获取。
 
+令牌站点共用 `checkin/token_site.py` 中的通用签到实现，各站点脚本只保留平台名称、环境变量前缀、默认地址和货币配置。
+
 ### Session Cookie 认证
 
 部分站点不支持令牌认证时使用。从浏览器 F12 → Application → Cookies 中复制 `session` 值。Session 可能过期，失效后需重新获取。
@@ -40,7 +41,7 @@ pip install -r requirements.txt
 
 ### 通用（可选）
 
-- `PUSHPLUS_TOKEN` — PushPlus 推送 Token（仅 Boxying 脚本支持）
+- `PUSHPLUS_TOKEN` — 统一工作流 PushPlus 推送 Token
 
 ### Boxying
 
@@ -65,14 +66,6 @@ pip install -r requirements.txt
 - `JIUUIJ_ACCESS_TOKEN` — 系统访问令牌
 - `JIUUIJ_API_USER` — 用户 ID
 - `JIUUIJ_TIMEOUT` — 请求超时秒数，默认 `30`
-
-### AnyRouter
-
-- `ANYROUTER_COOKIE` — 浏览器 Cookie 字符串（多个 cookie 用 `; ` 连接）
-- `ANYROUTER_API_USER` — 用户 ID
-- `ANYROUTER_TIMEOUT` — 请求超时秒数，默认 `60`
-
-> 说明：AnyRouter 启用了 WAF JS 挑战，脚本使用 Playwright 真实浏览器自动过盾，因此 GitHub Actions 运行时会长一些并自动安装 Chromium。
 
 ### 君の公益
 
@@ -119,8 +112,6 @@ bash setup-secrets.sh
 | `N1NEMAN_API_USER` | N1Neman 用户 ID |
 | `JIUUIJ_ACCESS_TOKEN` | Jiuuij 系统访问令牌 |
 | `JIUUIJ_API_USER` | Jiuuij 用户 ID |
-| `ANYROUTER_COOKIE` | AnyRouter Cookie 字符串 |
-| `ANYROUTER_API_USER` | AnyRouter 用户 ID |
 | `MUYUAN_ACCESS_TOKEN` | 君の公益 系统访问令牌 |
 | `MUYUAN_API_USER` | 君の公益 用户 ID |
 | `R7FIT_ACCESS_TOKEN` | 7RFit 系统访问令牌 |
@@ -161,8 +152,8 @@ $env:BOXYING_SESSION="你的Session"; $env:BOXYING_API_USER="你的ID"; python c
 $env:ELYSIVER_ACCESS_TOKEN="你的令牌"; $env:ELYSIVER_API_USER="你的ID"; python checkin/elysiver/checkin.py
 $env:N1NEMAN_ACCESS_TOKEN="你的令牌"; $env:N1NEMAN_API_USER="你的ID"; python checkin/n1neman/checkin.py
 $env:JIUUIJ_ACCESS_TOKEN="你的令牌"; $env:JIUUIJ_API_USER="你的ID"; python checkin/jiuuij/checkin.py
-$env:ANYROUTER_COOKIE="你的Cookie"; $env:ANYROUTER_API_USER="你的ID"; python checkin/anyrouter/checkin.py
 $env:MUYUAN_ACCESS_TOKEN="你的令牌"; $env:MUYUAN_API_USER="你的ID"; python checkin/muyuan/checkin.py
+$env:R7FIT_ACCESS_TOKEN="你的令牌"; $env:R7FIT_API_USER="你的ID"; python checkin/7rfit/checkin.py
 $env:MAOYULIN_ACCESS_TOKEN="你的令牌"; $env:MAOYULIN_API_USER="你的ID"; python checkin/maoyulin/checkin.py
 ```
 

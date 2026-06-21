@@ -21,17 +21,21 @@ PLATFORMS = [
     ("jiuuij", "checkin.jiuuij.checkin"),
     ("muyuan", "checkin.muyuan.checkin"),
     ("7rfit", "checkin.7rfit.checkin"),
+    ("maoyulin", "checkin.maoyulin.checkin"),
     ("anyrouter", "checkin.anyrouter.checkin"),
 ]
 
 
-def quota_to_dollar(quota) -> str:
+def quota_to_currency(quota, currency: str = "$") -> str:
     if quota is None:
         return "-"
     try:
-        return f"${int(quota) / 500000:.2f}"
+        amount = int(quota) / 500000
     except (TypeError, ValueError):
         return str(quota)
+    if currency == "$":
+        return f"${amount:.2f}"
+    return f"{amount:.2f} {currency}"
 
 
 def run_platform(name: str, module_path: str) -> dict:
@@ -60,18 +64,27 @@ def build_html(results: list) -> str:
             continue
         platform = r.get("platform", "?")
         status = "✅" if r.get("success") else "❌"
-        reward = quota_to_dollar(r.get("reward"))
-        balance = quota_to_dollar(r.get("balance"))
+        currency = r.get("currency") or "$"
+        reward = quota_to_currency(r.get("reward"), currency)
+        balance = quota_to_currency(r.get("balance"), currency)
         msg = r.get("message", "")
         rows += f"<tr><td>{platform}</td><td>{status}</td><td>{reward}</td><td>{balance}</td><td>{msg}</td></tr>"
 
-    total_reward = 0
+    total_rewards = {}
     for r in results:
         if r.get("reward") is not None:
             try:
-                total_reward += int(r["reward"])
+                currency = r.get("currency") or "$"
+                total_rewards[currency] = total_rewards.get(currency, 0) + int(r["reward"])
             except (TypeError, ValueError):
                 pass
+
+    if total_rewards:
+        total_reward = "，".join(
+            quota_to_currency(total, currency) for currency, total in total_rewards.items()
+        )
+    else:
+        total_reward = quota_to_currency(0)
 
     return f"""
 <h2>📋 签到日报 {now}</h2>
@@ -79,7 +92,7 @@ def build_html(results: list) -> str:
 <tr><th>平台</th><th>状态</th><th>今日奖励</th><th>当前余额</th><th>备注</th></tr>
 {rows}
 </table>
-<p>💰 今日总奖励: <strong>{quota_to_dollar(total_reward)}</strong></p>
+<p>💰 今日总奖励: <strong>{total_reward}</strong></p>
 """
 
 
@@ -114,8 +127,9 @@ def main() -> int:
         if r.get("skipped"):
             continue
         s = "✅" if r.get("success") else "❌"
-        reward = quota_to_dollar(r.get("reward"))
-        balance = quota_to_dollar(r.get("balance"))
+        currency = r.get("currency") or "$"
+        reward = quota_to_currency(r.get("reward"), currency)
+        balance = quota_to_currency(r.get("balance"), currency)
         print(f"  {s} {r['platform']}: 奖励={reward} 余额={balance}  {r.get('message', '')}")
 
     send_pushplus("多平台签到日报", html)

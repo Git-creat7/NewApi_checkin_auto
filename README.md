@@ -13,6 +13,7 @@
 | [AnyRouter](https://anyrouter.top/) | `checkin/anyrouter/checkin.py` | Session Cookie | `ANYROUTER_COOKIE` `ANYROUTER_API_USER` |
 | [君の公益](https://muyuan.do/) | `checkin/muyuan/checkin.py` | 令牌 | `MUYUAN_ACCESS_TOKEN` `MUYUAN_API_USER` |
 | [7RFit](https://api.7r.fit/) | `checkin/7rfit/checkin.py` | 令牌 | `R7FIT_ACCESS_TOKEN` `R7FIT_API_USER` |
+| [Maoyulin](https://maoyulin.xyz/) | `checkin/maoyulin/checkin.py` | 令牌 | `MAOYULIN_ACCESS_TOKEN` `MAOYULIN_API_USER` |
 
 ## 运行环境
 
@@ -85,6 +86,13 @@ pip install -r requirements.txt
 - `R7FIT_API_USER` — 用户 ID
 - `R7FIT_TIMEOUT` — 请求超时秒数，默认 `30`
 
+### Maoyulin
+
+- `MAOYULIN_ACCESS_TOKEN` — 系统访问令牌
+- `MAOYULIN_API_USER` — 用户 ID
+- `MAOYULIN_TIMEOUT` — 请求超时秒数，默认 `30`
+- `MAOYULIN_CURRENCY` — 余额显示货币，默认 `猫猫`
+
 ## GitHub Actions 配置
 
 ### 方式一：使用脚本批量设置（推荐）
@@ -117,6 +125,8 @@ bash setup-secrets.sh
 | `MUYUAN_API_USER` | 君の公益 用户 ID |
 | `R7FIT_ACCESS_TOKEN` | 7RFit 系统访问令牌 |
 | `R7FIT_API_USER` | 7RFit 用户 ID |
+| `MAOYULIN_ACCESS_TOKEN` | Maoyulin 系统访问令牌 |
+| `MAOYULIN_API_USER` | Maoyulin 用户 ID |
 | `PUSHPLUS_TOKEN` | PushPlus 推送 Token（可选） |
 
 ### 方式三：命令行设置
@@ -153,6 +163,7 @@ $env:N1NEMAN_ACCESS_TOKEN="你的令牌"; $env:N1NEMAN_API_USER="你的ID"; pyth
 $env:JIUUIJ_ACCESS_TOKEN="你的令牌"; $env:JIUUIJ_API_USER="你的ID"; python checkin/jiuuij/checkin.py
 $env:ANYROUTER_COOKIE="你的Cookie"; $env:ANYROUTER_API_USER="你的ID"; python checkin/anyrouter/checkin.py
 $env:MUYUAN_ACCESS_TOKEN="你的令牌"; $env:MUYUAN_API_USER="你的ID"; python checkin/muyuan/checkin.py
+$env:MAOYULIN_ACCESS_TOKEN="你的令牌"; $env:MAOYULIN_API_USER="你的ID"; python checkin/maoyulin/checkin.py
 ```
 
 统一签到 + 推送：

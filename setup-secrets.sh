@@ -66,6 +66,13 @@ read -p "R7FIT_ACCESS_TOKEN: " val
 read -p "R7FIT_API_USER: " val
 [ -n "$val" ] && gh secret set R7FIT_API_USER -b "$val"
 
+# ===== MAOYULIN =====
+read -p "MAOYULIN_ACCESS_TOKEN: " val
+[ -n "$val" ] && gh secret set MAOYULIN_ACCESS_TOKEN -b "$val"
+
+read -p "MAOYULIN_API_USER: " val
+[ -n "$val" ] && gh secret set MAOYULIN_API_USER -b "$val"
+
 # ===== 通用推送 =====
 read -p "PUSHPLUS_TOKEN (可选): " val
 [ -n "$val" ] && gh secret set PUSHPLUS_TOKEN -b "$val"

@@ -27,6 +27,7 @@ jobs:
           playwright install chromium
 
       - name: Random delay (10-110 min)
+        if: github.event_name == 'schedule'
         run: |
           DELAY=$(python3 -c "import random; print(random.randint(10, 110))")
           echo "随机延迟 $DELAY 分钟"

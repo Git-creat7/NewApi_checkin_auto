@@ -11,7 +11,7 @@
 | [N1Neman](https://mynewapi.n1neman.fun/) | `checkin/n1neman/checkin.py` | 令牌 | `N1NEMAN_ACCESS_TOKEN` `N1NEMAN_API_USER` |
 | [Jiuuij](https://jiuuij.de5.net/) | `checkin/jiuuij/checkin.py` | 令牌 | `JIUUIJ_ACCESS_TOKEN` `JIUUIJ_API_USER` |
 | [君の公益](https://muyuan.do/) | `checkin/muyuan/checkin.py` | 令牌 | `MUYUAN_ACCESS_TOKEN` `MUYUAN_API_USER` |
-| [7RFit](https://api.7r.fit/) | `checkin/7rfit/checkin.py` | 令牌 | `R7FIT_ACCESS_TOKEN` `R7FIT_API_USER` |
+| [91](https://api.7r.fit/) | `checkin/7rfit/checkin.py` | 令牌 | `R91_ACCESS_TOKEN` `R91_API_USER` |
 | [Maoyulin](https://maoyulin.xyz/) | `checkin/maoyulin/checkin.py` | 令牌 | `MAOYULIN_ACCESS_TOKEN` `MAOYULIN_API_USER` |
 
 ## 运行环境
@@ -73,11 +73,11 @@ pip install -r requirements.txt
 - `MUYUAN_API_USER` — 用户 ID
 - `MUYUAN_TIMEOUT` — 请求超时秒数，默认 `30`
 
-### 7RFit
+### 91
 
-- `R7FIT_ACCESS_TOKEN` — 系统访问令牌
-- `R7FIT_API_USER` — 用户 ID
-- `R7FIT_TIMEOUT` — 请求超时秒数，默认 `30`
+- `R91_ACCESS_TOKEN` — 系统访问令牌
+- `R91_API_USER` — 用户 ID
+- `R91_TIMEOUT` — 请求超时秒数，默认 `30`
 
 ### Maoyulin
 
@@ -114,8 +114,8 @@ bash setup-secrets.sh
 | `JIUUIJ_API_USER` | Jiuuij 用户 ID |
 | `MUYUAN_ACCESS_TOKEN` | 君の公益 系统访问令牌 |
 | `MUYUAN_API_USER` | 君の公益 用户 ID |
-| `R7FIT_ACCESS_TOKEN` | 7RFit 系统访问令牌 |
-| `R7FIT_API_USER` | 7RFit 用户 ID |
+| `R91_ACCESS_TOKEN` | 91 系统访问令牌 |
+| `R91_API_USER` | 91 用户 ID |
 | `MAOYULIN_ACCESS_TOKEN` | Maoyulin 系统访问令牌 |
 | `MAOYULIN_API_USER` | Maoyulin 用户 ID |
 | `PUSHPLUS_TOKEN` | PushPlus 推送 Token（可选） |
@@ -153,7 +153,7 @@ $env:ELYSIVER_ACCESS_TOKEN="你的令牌"; $env:ELYSIVER_API_USER="你的ID"; py
 $env:N1NEMAN_ACCESS_TOKEN="你的令牌"; $env:N1NEMAN_API_USER="你的ID"; python checkin/n1neman/checkin.py
 $env:JIUUIJ_ACCESS_TOKEN="你的令牌"; $env:JIUUIJ_API_USER="你的ID"; python checkin/jiuuij/checkin.py
 $env:MUYUAN_ACCESS_TOKEN="你的令牌"; $env:MUYUAN_API_USER="你的ID"; python checkin/muyuan/checkin.py
-$env:R7FIT_ACCESS_TOKEN="你的令牌"; $env:R7FIT_API_USER="你的ID"; python checkin/7rfit/checkin.py
+$env:R91_ACCESS_TOKEN="你的令牌"; $env:R91_API_USER="你的ID"; python checkin/7rfit/checkin.py
 $env:MAOYULIN_ACCESS_TOKEN="你的令牌"; $env:MAOYULIN_API_USER="你的ID"; python checkin/maoyulin/checkin.py
 ```
 

@@ -52,12 +52,12 @@ read -p "MUYUAN_ACCESS_TOKEN: " val
 read -p "MUYUAN_API_USER: " val
 [ -n "$val" ] && gh secret set MUYUAN_API_USER -b "$val"
 
-# ===== 7RFIT =====
-read -p "R7FIT_ACCESS_TOKEN: " val
-[ -n "$val" ] && gh secret set R7FIT_ACCESS_TOKEN -b "$val"
+# ===== 91 =====
+read -p "R91_ACCESS_TOKEN: " val
+[ -n "$val" ] && gh secret set R91_ACCESS_TOKEN -b "$val"
 
-read -p "R7FIT_API_USER: " val
-[ -n "$val" ] && gh secret set R7FIT_API_USER -b "$val"
+read -p "R91_API_USER: " val
+[ -n "$val" ] && gh secret set R91_API_USER -b "$val"
 
 # ===== MAOYULIN =====
 read -p "MAOYULIN_ACCESS_TOKEN: " val

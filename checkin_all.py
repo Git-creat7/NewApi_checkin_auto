@@ -24,7 +24,7 @@ PLATFORMS = [
     ("n1neman", "checkin.n1neman.checkin"),
     ("jiuuij", "checkin.jiuuij.checkin"),
     ("muyuan", "checkin.muyuan.checkin"),
-    ("r7fit", "checkin.7rfit.checkin"),
+    ("r91", "checkin.7rfit.checkin"),
     ("maoyulin", "checkin.maoyulin.checkin"),
 ]
 

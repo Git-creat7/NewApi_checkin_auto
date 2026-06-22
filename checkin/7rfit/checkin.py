@@ -9,8 +9,8 @@ from checkin.token_site import TokenSiteConfig, run_as_script, run_token_checkin
 
 
 CONFIG = TokenSiteConfig(
-    platform="7RFit",
-    env_prefix="R7FIT",
+    platform="91",
+    env_prefix="R91",
     default_base_url="https://api.7r.fit",
 )
 

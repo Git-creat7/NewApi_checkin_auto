@@ -48,8 +48,8 @@ jobs:
           JIUUIJ_API_USER: ${{ secrets.JIUUIJ_API_USER }}
           MUYUAN_ACCESS_TOKEN: ${{ secrets.MUYUAN_ACCESS_TOKEN }}
           MUYUAN_API_USER: ${{ secrets.MUYUAN_API_USER }}
-          R7FIT_ACCESS_TOKEN: ${{ secrets.R7FIT_ACCESS_TOKEN }}
-          R7FIT_API_USER: ${{ secrets.R7FIT_API_USER }}
+          R91_ACCESS_TOKEN: ${{ secrets.R91_ACCESS_TOKEN }}
+          R91_API_USER: ${{ secrets.R91_API_USER }}
           MAOYULIN_ACCESS_TOKEN: ${{ secrets.MAOYULIN_ACCESS_TOKEN }}
           MAOYULIN_API_USER: ${{ secrets.MAOYULIN_API_USER }}
           PUSHPLUS_TOKEN: ${{ secrets.PUSHPLUS_TOKEN }}

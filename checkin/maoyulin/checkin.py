@@ -5,7 +5,7 @@ import sys
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 
-from checkin.token_site import TokenSiteConfig, run_as_script, run_token_checkin
+from checkin.token_site import TokenSiteConfig, run_as_script, run_token_checkin, validate_token_site
 
 
 CONFIG = TokenSiteConfig(
@@ -18,6 +18,10 @@ CONFIG = TokenSiteConfig(
 
 def main() -> dict:
     return run_token_checkin(CONFIG)
+
+
+def validate() -> dict:
+    return validate_token_site(CONFIG)
 
 
 if __name__ == "__main__":

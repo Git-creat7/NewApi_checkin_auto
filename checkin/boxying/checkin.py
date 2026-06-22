@@ -7,38 +7,14 @@ from curl_cffi import requests
 
 
 BASE_URL = os.getenv("BOXYING_BASE_URL", "https://www.boxying.com").rstrip("/")
+ACCESS_TOKEN = os.getenv("BOXYING_ACCESS_TOKEN", "").strip()
 SESSION = os.getenv("BOXYING_SESSION", "").strip()
 API_USER = os.getenv("BOXYING_API_USER", "").strip()
-# 推送环境变量
-PUSH_KEY = os.getenv("PUSH_KEY", "").strip()
 TIMEOUT = int(os.getenv("BOXYING_TIMEOUT", "30"))
-PUSHPLUS_TOKEN = os.getenv("PUSHPLUS_TOKEN", "").strip()
 
 
 class ApiError(RuntimeError):
     pass
-
-
-def send_pushplus(title: str, content: str) -> None:
-    if not PUSHPLUS_TOKEN:
-        return
-
-    try:
-        response = requests.post(
-            "https://www.pushplus.plus/send",
-            json={
-                "token": PUSHPLUS_TOKEN,
-                "title": title,
-                "content": content,
-                "template": "markdown",
-            },
-            impersonate="chrome124",
-            timeout=TIMEOUT,
-        )
-        response.raise_for_status()
-        print(f"PushPlus response: {response.text[:300]}")
-    except Exception as exc:
-        print(f"PushPlus send failed: {exc}", file=sys.stderr)
 
 
 def current_month() -> str:
@@ -50,11 +26,12 @@ def current_day() -> str:
 
 
 def make_session(include_api_user: bool = True) -> requests.Session:
-    if not SESSION:
-        raise ApiError("BOXYING_SESSION is required.")
+    if not ACCESS_TOKEN and not SESSION:
+        raise ApiError("BOXYING_ACCESS_TOKEN or BOXYING_SESSION is required.")
+    if ACCESS_TOKEN and not API_USER:
+        raise ApiError("BOXYING_API_USER is required when using BOXYING_ACCESS_TOKEN.")
 
     session = requests.Session(impersonate="chrome124", timeout=TIMEOUT)
-    session.cookies.set("session", SESSION, domain="www.boxying.com")
     session.headers.update(
         {
             "Accept": "application/json, text/plain, */*",
@@ -62,9 +39,13 @@ def make_session(include_api_user: bool = True) -> requests.Session:
             "Origin": BASE_URL,
             "Referer": f"{BASE_URL}/console",
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
-            "Cookie": f"session={SESSION}",
         }
     )
+    if ACCESS_TOKEN:
+        session.headers["Authorization"] = f"Bearer {ACCESS_TOKEN}"
+    if SESSION:
+        session.cookies.set("session", SESSION, domain="www.boxying.com")
+        session.headers["Cookie"] = f"session={SESSION}"
     if include_api_user and API_USER:
         session.headers["new-api-user"] = API_USER
     return session
@@ -154,7 +135,7 @@ def run_once(include_api_user: bool) -> dict:
         result["message"] = "签到功能未开启"
         return result
     if site_status.get("turnstile_check"):
-        print("⚠️ 站点启用了 Turnstile，继续尝试使用现有 session 签到...")
+        print("⚠️ 站点启用了 Turnstile，继续尝试使用现有凭据签到...")
 
     user = fetch_self(session)
     print(f"当前账号: id={user.get('id')} display_name={user.get('display_name')}")
@@ -224,7 +205,7 @@ def main() -> dict:
         return run_once(include_api_user=True)
     except ApiError as exc:
         msg = str(exc)
-        if API_USER and "insufficient privileges" in msg.lower():
+        if SESSION and API_USER and "insufficient privileges" in msg.lower():
             print("⚠️ 使用 new-api-user 头失败，尝试仅凭 session 重试一次...")
             return run_once(include_api_user=False)
         raise

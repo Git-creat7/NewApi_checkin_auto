@@ -9,9 +9,9 @@ from checkin.token_site import TokenSiteConfig, run_as_script, run_token_checkin
 
 
 CONFIG = TokenSiteConfig(
-    platform="Elysiver",
-    env_prefix="ELYSIVER",
-    default_base_url="https://elysiver.h-e.top",
+    platform="CHY公益站",
+    env_prefix="CHY",
+    default_base_url="https://chybenzun.top",
 )
 
 

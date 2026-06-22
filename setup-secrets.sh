@@ -18,6 +18,9 @@ if ! gh auth status &> /dev/null; then
 fi
 
 # ===== Boxying =====
+read -p "BOXYING_ACCESS_TOKEN: " val
+[ -n "$val" ] && gh secret set BOXYING_ACCESS_TOKEN -b "$val"
+
 read -p "BOXYING_SESSION: " val
 [ -n "$val" ] && gh secret set BOXYING_SESSION -b "$val"
 
@@ -65,6 +68,13 @@ read -p "MAOYULIN_ACCESS_TOKEN: " val
 
 read -p "MAOYULIN_API_USER: " val
 [ -n "$val" ] && gh secret set MAOYULIN_API_USER -b "$val"
+
+# ===== CHY公益站 =====
+read -p "CHY_ACCESS_TOKEN: " val
+[ -n "$val" ] && gh secret set CHY_ACCESS_TOKEN -b "$val"
+
+read -p "CHY_API_USER: " val
+[ -n "$val" ] && gh secret set CHY_API_USER -b "$val"
 
 # ===== 通用推送 =====
 read -p "PUSHPLUS_TOKEN (可选): " val

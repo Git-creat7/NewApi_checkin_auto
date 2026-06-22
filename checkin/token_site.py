@@ -158,6 +158,20 @@ def run_token_checkin(config: TokenSiteConfig) -> dict:
     return result
 
 
+def validate_token_site(config: TokenSiteConfig) -> dict:
+    _, _, _, _, currency = site_env(config)
+    session = make_session(config)
+    user = fetch_self(config, session)
+    return {
+        "platform": config.platform,
+        "success": True,
+        "message": f"id={user.get('id')} name={user.get('display_name')}",
+        "reward": None,
+        "balance": user.get("quota"),
+        "currency": currency,
+    }
+
+
 def run_as_script(config: TokenSiteConfig) -> None:
     try:
         result = run_token_checkin(config)

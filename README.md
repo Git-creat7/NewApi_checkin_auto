@@ -6,13 +6,14 @@
 
 | 平台 | 脚本路径 | 认证方式 | 主要环境变量 |
 |:-----|:--------|:--------|:------------|
-| [Boxying](https://www.boxying.com/register?aff=henf) | `checkin/boxying/checkin.py` | Session Cookie | `BOXYING_SESSION` `BOXYING_API_USER` |
+| [Boxying](https://www.boxying.com/register?aff=henf) | `checkin/boxying/checkin.py` | 令牌 / Session Cookie | `BOXYING_ACCESS_TOKEN` `BOXYING_SESSION` `BOXYING_API_USER` |
 | [Elysiver](https://elysiver.h-e.top/register?aff=vGW7) | `checkin/elysiver/checkin.py` | 令牌 | `ELYSIVER_ACCESS_TOKEN` `ELYSIVER_API_USER` |
 | [N1Neman](https://mynewapi.n1neman.fun/) | `checkin/n1neman/checkin.py` | 令牌 | `N1NEMAN_ACCESS_TOKEN` `N1NEMAN_API_USER` |
 | [Jiuuij](https://jiuuij.de5.net/) | `checkin/jiuuij/checkin.py` | 令牌 | `JIUUIJ_ACCESS_TOKEN` `JIUUIJ_API_USER` |
 | [君の公益](https://muyuan.do/) | `checkin/muyuan/checkin.py` | 令牌 | `MUYUAN_ACCESS_TOKEN` `MUYUAN_API_USER` |
 | [91](https://api.7r.fit/) | `checkin/7rfit/checkin.py` | 令牌 | `R91_ACCESS_TOKEN` `R91_API_USER` |
 | [Maoyulin](https://maoyulin.xyz/) | `checkin/maoyulin/checkin.py` | 令牌 | `MAOYULIN_ACCESS_TOKEN` `MAOYULIN_API_USER` |
+| [CHY公益站](https://chybenzun.top/) | `checkin/chy/checkin.py` | 令牌 | `CHY_ACCESS_TOKEN` `CHY_API_USER` |
 
 ## 运行环境
 
@@ -45,6 +46,7 @@ pip install -r requirements.txt
 
 ### Boxying
 
+- `BOXYING_ACCESS_TOKEN` — 系统访问令牌（优先使用）
 - `BOXYING_SESSION` — 浏览器 Cookie 中的 `session`
 - `BOXYING_API_USER` — 用户 ID
 - `BOXYING_TIMEOUT` — 请求超时秒数，默认 `30`
@@ -86,6 +88,12 @@ pip install -r requirements.txt
 - `MAOYULIN_TIMEOUT` — 请求超时秒数，默认 `30`
 - `MAOYULIN_CURRENCY` — 余额显示货币，默认 `猫猫`
 
+### CHY公益站
+
+- `CHY_ACCESS_TOKEN` — 系统访问令牌
+- `CHY_API_USER` — 用户 ID
+- `CHY_TIMEOUT` — 请求超时秒数，默认 `30`
+
 ## GitHub Actions 配置
 
 ### 方式一：使用脚本批量设置（推荐）
@@ -104,7 +112,8 @@ bash setup-secrets.sh
 
 | Secret 名称 | 用途 |
 |:------------|:-----|
-| `BOXYING_SESSION` | Boxying 登录 Session |
+| `BOXYING_ACCESS_TOKEN` | Boxying 系统访问令牌 |
+| `BOXYING_SESSION` | Boxying 登录 Session（令牌不可用时兜底） |
 | `BOXYING_API_USER` | Boxying 用户 ID |
 | `ELYSIVER_ACCESS_TOKEN` | Elysiver 系统访问令牌 |
 | `ELYSIVER_API_USER` | Elysiver 用户 ID |
@@ -118,6 +127,8 @@ bash setup-secrets.sh
 | `R91_API_USER` | 91 用户 ID |
 | `MAOYULIN_ACCESS_TOKEN` | Maoyulin 系统访问令牌 |
 | `MAOYULIN_API_USER` | Maoyulin 用户 ID |
+| `CHY_ACCESS_TOKEN` | CHY公益站 系统访问令牌 |
+| `CHY_API_USER` | CHY公益站 用户 ID |
 | `PUSHPLUS_TOKEN` | PushPlus 推送 Token（可选） |
 
 ### 方式三：命令行设置
@@ -132,10 +143,11 @@ gh secret set BOXYING_API_USER -b "你的用户ID"
 只有一个统一工作流，每天运行一次：
 
 - `.github/workflows/checkin-all.yml` — 统一签到 + 汇总推送
+- `.github/workflows/validate-credentials.yml` — 手动校验凭据，只读取用户信息，不执行签到
 
 触发时间：UTC 3:00（北京时间 11:00），再随机延迟 10-110 分钟，实际执行时间在北京时间 **11:10-12:50** 之间随机。
 
-也支持手动触发 `workflow_dispatch`。
+也支持手动触发 `workflow_dispatch`。更换令牌后建议先运行 `validate-credentials` 确认 ID 和令牌匹配。
 
 ## PushPlus 推送
 
@@ -148,13 +160,14 @@ gh secret set BOXYING_API_USER -b "你的用户ID"
 PowerShell 示例：
 
 ```powershell
-$env:BOXYING_SESSION="你的Session"; $env:BOXYING_API_USER="你的ID"; python checkin/boxying/checkin.py
+$env:BOXYING_ACCESS_TOKEN="你的令牌"; $env:BOXYING_API_USER="你的ID"; python checkin/boxying/checkin.py
 $env:ELYSIVER_ACCESS_TOKEN="你的令牌"; $env:ELYSIVER_API_USER="你的ID"; python checkin/elysiver/checkin.py
 $env:N1NEMAN_ACCESS_TOKEN="你的令牌"; $env:N1NEMAN_API_USER="你的ID"; python checkin/n1neman/checkin.py
 $env:JIUUIJ_ACCESS_TOKEN="你的令牌"; $env:JIUUIJ_API_USER="你的ID"; python checkin/jiuuij/checkin.py
 $env:MUYUAN_ACCESS_TOKEN="你的令牌"; $env:MUYUAN_API_USER="你的ID"; python checkin/muyuan/checkin.py
 $env:R91_ACCESS_TOKEN="你的令牌"; $env:R91_API_USER="你的ID"; python checkin/7rfit/checkin.py
 $env:MAOYULIN_ACCESS_TOKEN="你的令牌"; $env:MAOYULIN_API_USER="你的ID"; python checkin/maoyulin/checkin.py
+$env:CHY_ACCESS_TOKEN="你的令牌"; $env:CHY_API_USER="你的ID"; python checkin/chy/checkin.py
 ```
 
 统一签到 + 推送：

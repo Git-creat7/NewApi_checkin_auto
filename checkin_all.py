@@ -26,6 +26,7 @@ PLATFORMS = [
     ("muyuan", "checkin.muyuan.checkin"),
     ("r91", "checkin.7rfit.checkin"),
     ("maoyulin", "checkin.maoyulin.checkin"),
+    ("chy", "checkin.chy.checkin"),
 ]
 
 
@@ -152,8 +153,11 @@ def main() -> int:
             detail = f"{r.get('error_type')}: {detail}"
         print(f"  {s} {r['platform']}: 奖励={reward} 余额={balance} 耗时={duration}  {detail}")
 
-    send_pushplus("多平台签到日报", html)
     failed = [r for r in results if not r.get("success") and not r.get("skipped")]
+    title = "多平台签到日报"
+    if failed:
+        title += "：有失败"
+    send_pushplus(title, html)
     return len(failed)
 
 

@@ -14,6 +14,8 @@
 | [91](https://api.7r.fit/) | `checkin/7rfit/checkin.py` | 令牌 | `R91_ACCESS_TOKEN` `R91_API_USER` |
 | [Maoyulin](https://maoyulin.xyz/) | `checkin/maoyulin/checkin.py` | 令牌 | `MAOYULIN_ACCESS_TOKEN` `MAOYULIN_API_USER` |
 | [CHY公益站](https://chybenzun.top/) | `checkin/chy/checkin.py` | 令牌 | `CHY_ACCESS_TOKEN` `CHY_API_USER` |
+| [Mofas](https://www.mofas.one/) | `checkin/mofas/checkin.py` | 令牌 | `MOFAS_ACCESS_TOKEN` `MOFAS_API_USER` |
+| [Lan](https://ai.venlacy.com/) | `checkin/venlacy/checkin.py` | 令牌 | `VENLACY_ACCESS_TOKEN` `VENLACY_API_USER` |
 
 ## 运行环境
 
@@ -94,6 +96,18 @@ pip install -r requirements.txt
 - `CHY_API_USER` — 用户 ID
 - `CHY_TIMEOUT` — 请求超时秒数，默认 `30`
 
+### Mofas
+
+- `MOFAS_ACCESS_TOKEN` — 系统访问令牌
+- `MOFAS_API_USER` — 用户 ID
+- `MOFAS_TIMEOUT` — 请求超时秒数，默认 `30`
+
+### Lan (Venlacy)
+
+- `VENLACY_ACCESS_TOKEN` — 系统访问令牌
+- `VENLACY_API_USER` — 用户 ID
+- `VENLACY_TIMEOUT` — 请求超时秒数，默认 `30`
+
 ## GitHub Actions 配置
 
 ### 方式一：使用脚本批量设置（推荐）
@@ -129,6 +143,10 @@ bash setup-secrets.sh
 | `MAOYULIN_API_USER` | Maoyulin 用户 ID |
 | `CHY_ACCESS_TOKEN` | CHY公益站 系统访问令牌 |
 | `CHY_API_USER` | CHY公益站 用户 ID |
+| `MOFAS_ACCESS_TOKEN` | Mofas 系统访问令牌 |
+| `MOFAS_API_USER` | Mofas 用户 ID |
+| `VENLACY_ACCESS_TOKEN` | Lan 系统访问令牌 |
+| `VENLACY_API_USER` | Lan 用户 ID |
 | `PUSHPLUS_TOKEN` | PushPlus 推送 Token（可选） |
 
 ### 方式三：命令行设置
@@ -168,6 +186,8 @@ $env:MUYUAN_ACCESS_TOKEN="你的令牌"; $env:MUYUAN_API_USER="你的ID"; python
 $env:R91_ACCESS_TOKEN="你的令牌"; $env:R91_API_USER="你的ID"; python checkin/7rfit/checkin.py
 $env:MAOYULIN_ACCESS_TOKEN="你的令牌"; $env:MAOYULIN_API_USER="你的ID"; python checkin/maoyulin/checkin.py
 $env:CHY_ACCESS_TOKEN="你的令牌"; $env:CHY_API_USER="你的ID"; python checkin/chy/checkin.py
+$env:MOFAS_ACCESS_TOKEN="你的令牌"; $env:MOFAS_API_USER="你的ID"; python checkin/mofas/checkin.py
+$env:VENLACY_ACCESS_TOKEN="你的令牌"; $env:VENLACY_API_USER="你的ID"; python checkin/venlacy/checkin.py
 ```
 
 统一签到 + 推送：

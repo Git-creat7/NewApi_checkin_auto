@@ -27,6 +27,8 @@ PLATFORMS = [
     ("r91", "checkin.7rfit.checkin"),
     ("maoyulin", "checkin.maoyulin.checkin"),
     ("chy", "checkin.chy.checkin"),
+    ("mofas", "checkin.mofas.checkin"),
+    ("venlacy", "checkin.venlacy.checkin"),
 ]
 
 

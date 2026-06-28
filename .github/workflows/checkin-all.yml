@@ -55,5 +55,9 @@ jobs:
           MAOYULIN_API_USER: ${{ secrets.MAOYULIN_API_USER }}
           CHY_ACCESS_TOKEN: ${{ secrets.CHY_ACCESS_TOKEN }}
           CHY_API_USER: ${{ secrets.CHY_API_USER }}
+          MOFAS_ACCESS_TOKEN: ${{ secrets.MOFAS_ACCESS_TOKEN }}
+          MOFAS_API_USER: ${{ secrets.MOFAS_API_USER }}
+          VENLACY_ACCESS_TOKEN: ${{ secrets.VENLACY_ACCESS_TOKEN }}
+          VENLACY_API_USER: ${{ secrets.VENLACY_API_USER }}
           PUSHPLUS_TOKEN: ${{ secrets.PUSHPLUS_TOKEN }}
         run: python checkin_all.py

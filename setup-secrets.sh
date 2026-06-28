@@ -76,6 +76,20 @@ read -p "CHY_ACCESS_TOKEN: " val
 read -p "CHY_API_USER: " val
 [ -n "$val" ] && gh secret set CHY_API_USER -b "$val"
 
+# ===== Mofas =====
+read -p "MOFAS_ACCESS_TOKEN: " val
+[ -n "$val" ] && gh secret set MOFAS_ACCESS_TOKEN -b "$val"
+
+read -p "MOFAS_API_USER: " val
+[ -n "$val" ] && gh secret set MOFAS_API_USER -b "$val"
+
+# ===== Lan (Venlacy) =====
+read -p "VENLACY_ACCESS_TOKEN: " val
+[ -n "$val" ] && gh secret set VENLACY_ACCESS_TOKEN -b "$val"
+
+read -p "VENLACY_API_USER: " val
+[ -n "$val" ] && gh secret set VENLACY_API_USER -b "$val"
+
 # ===== 通用推送 =====
 read -p "PUSHPLUS_TOKEN (可选): " val
 [ -n "$val" ] && gh secret set PUSHPLUS_TOKEN -b "$val"

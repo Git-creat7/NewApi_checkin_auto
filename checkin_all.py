@@ -29,6 +29,7 @@ PLATFORMS = [
     ("chy", "checkin.chy.checkin"),
     ("mofas", "checkin.mofas.checkin"),
     ("venlacy", "checkin.venlacy.checkin"),
+    ("cun", "checkin.cun.checkin"),
 ]
 
 

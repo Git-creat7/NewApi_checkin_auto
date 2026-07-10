@@ -16,6 +16,7 @@
 | [CHY公益站](https://chybenzun.top/) | `checkin/chy/checkin.py` | 令牌 | `CHY_ACCESS_TOKEN` `CHY_API_USER` |
 | [Mofas](https://www.mofas.one/) | `checkin/mofas/checkin.py` | 令牌 | `MOFAS_ACCESS_TOKEN` `MOFAS_API_USER` |
 | [Lan](https://ai.venlacy.com/) | `checkin/venlacy/checkin.py` | 令牌 | `VENLACY_ACCESS_TOKEN` `VENLACY_API_USER` |
+| [CUN](https://www.cun.ai/) | `checkin/cun/checkin.py` | 令牌 | `CUN_ACCESS_TOKEN` `CUN_API_USER` |
 
 ## 运行环境
 
@@ -108,6 +109,12 @@ pip install -r requirements.txt
 - `VENLACY_API_USER` — 用户 ID
 - `VENLACY_TIMEOUT` — 请求超时秒数，默认 `30`
 
+### CUN
+
+- `CUN_ACCESS_TOKEN` — 系统访问令牌
+- `CUN_API_USER` — 用户 ID
+- `CUN_TIMEOUT` — 请求超时秒数，默认 `30`
+
 ## GitHub Actions 配置
 
 ### 方式一：使用脚本批量设置（推荐）
@@ -147,6 +154,8 @@ bash setup-secrets.sh
 | `MOFAS_API_USER` | Mofas 用户 ID |
 | `VENLACY_ACCESS_TOKEN` | Lan 系统访问令牌 |
 | `VENLACY_API_USER` | Lan 用户 ID |
+| `CUN_ACCESS_TOKEN` | CUN 系统访问令牌 |
+| `CUN_API_USER` | CUN 用户 ID |
 | `PUSHPLUS_TOKEN` | PushPlus 推送 Token（可选） |
 
 ### 方式三：命令行设置
@@ -188,6 +197,7 @@ $env:MAOYULIN_ACCESS_TOKEN="你的令牌"; $env:MAOYULIN_API_USER="你的ID"; py
 $env:CHY_ACCESS_TOKEN="你的令牌"; $env:CHY_API_USER="你的ID"; python checkin/chy/checkin.py
 $env:MOFAS_ACCESS_TOKEN="你的令牌"; $env:MOFAS_API_USER="你的ID"; python checkin/mofas/checkin.py
 $env:VENLACY_ACCESS_TOKEN="你的令牌"; $env:VENLACY_API_USER="你的ID"; python checkin/venlacy/checkin.py
+$env:CUN_ACCESS_TOKEN="你的令牌"; $env:CUN_API_USER="你的ID"; python checkin/cun/checkin.py
 ```
 
 统一签到 + 推送：

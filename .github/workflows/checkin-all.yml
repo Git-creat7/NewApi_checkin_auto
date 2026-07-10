@@ -59,5 +59,7 @@ jobs:
           MOFAS_API_USER: ${{ secrets.MOFAS_API_USER }}
           VENLACY_ACCESS_TOKEN: ${{ secrets.VENLACY_ACCESS_TOKEN }}
           VENLACY_API_USER: ${{ secrets.VENLACY_API_USER }}
+          CUN_ACCESS_TOKEN: ${{ secrets.CUN_ACCESS_TOKEN }}
+          CUN_API_USER: ${{ secrets.CUN_API_USER }}
           PUSHPLUS_TOKEN: ${{ secrets.PUSHPLUS_TOKEN }}
         run: python checkin_all.py

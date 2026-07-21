@@ -12,9 +12,10 @@
 | [Jiuuij](https://jiuuij.de5.net/) | `checkin/jiuuij/checkin.py` | 令牌 | `JIUUIJ_ACCESS_TOKEN` `JIUUIJ_API_USER` |
 | [91](https://api.7r.fit/) | `checkin/7rfit/checkin.py` | 令牌 | `R91_ACCESS_TOKEN` `R91_API_USER` |
 | [Mofas](https://www.mofas.one/) | `checkin/mofas/checkin.py` | 令牌 | `MOFAS_ACCESS_TOKEN` `MOFAS_API_USER` |
-
 | [Lan](https://ai.venlacy.com/) | `checkin/venlacy/checkin.py` | 令牌 | `VENLACY_ACCESS_TOKEN` `VENLACY_API_USER` |
 | [CUN](https://www.cun.ai/) | `checkin/cun/checkin.py` | 令牌 | `CUN_ACCESS_TOKEN` `CUN_API_USER` |
+| [Metapi](https://metapi.lilililwan.xyz/) | `checkin/metapi/checkin.py` | 令牌 | `METAPI_ACCESS_TOKEN` `METAPI_API_USER` |
+
 
 ## 运行环境
 
@@ -95,7 +96,14 @@ pip install -r requirements.txt
 - `CUN_API_USER` — 用户 ID
 - `CUN_TIMEOUT` — 请求超时秒数，默认 `30`
 
+### Metapi
+
+- `METAPI_ACCESS_TOKEN` — 系统访问令牌
+- `METAPI_API_USER` — 用户 ID
+- `METAPI_TIMEOUT` — 请求超时秒数，默认 `30`
+
 ## GitHub Actions 配置
+
 
 ### 方式一：使用脚本批量设置（推荐）
 
@@ -131,7 +139,10 @@ bash setup-secrets.sh
 | `VENLACY_API_USER` | Lan 用户 ID |
 | `CUN_ACCESS_TOKEN` | CUN 系统访问令牌 |
 | `CUN_API_USER` | CUN 用户 ID |
+| `METAPI_ACCESS_TOKEN` | Metapi 系统访问令牌 |
+| `METAPI_API_USER` | Metapi 用户 ID |
 | `PUSHPLUS_TOKEN` | PushPlus 推送 Token（可选） |
+
 
 ### 方式三：命令行设置
 
@@ -147,7 +158,8 @@ gh secret set BOXYING_API_USER -b "你的用户ID"
 - `.github/workflows/checkin-all.yml` — 统一签到 + 汇总推送
 - `.github/workflows/validate-credentials.yml` — 手动校验凭据，只读取用户信息，不执行签到
 
-触发时间：UTC 3:00（北京时间 11:00），再随机延迟 10-110 分钟，实际执行时间在北京时间 **11:10-12:50** 之间随机。
+触发时间：UTC 3:00（北京时间 11:00），到点立即执行，无随机延迟。
+
 
 也支持手动触发 `workflow_dispatch`。更换令牌后建议先运行 `validate-credentials` 确认 ID 和令牌匹配。
 
@@ -171,7 +183,9 @@ $env:MOFAS_ACCESS_TOKEN="你的令牌"; $env:MOFAS_API_USER="你的ID"; python c
 
 $env:VENLACY_ACCESS_TOKEN="你的令牌"; $env:VENLACY_API_USER="你的ID"; python checkin/venlacy/checkin.py
 $env:CUN_ACCESS_TOKEN="你的令牌"; $env:CUN_API_USER="你的ID"; python checkin/cun/checkin.py
+$env:METAPI_ACCESS_TOKEN="你的令牌"; $env:METAPI_API_USER="你的ID"; python checkin/metapi/checkin.py
 ```
+
 
 统一签到 + 推送：
 

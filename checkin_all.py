@@ -27,6 +27,7 @@ PLATFORMS = [
     ("mofas", "checkin.mofas.checkin"),
     ("venlacy", "checkin.venlacy.checkin"),
     ("cun", "checkin.cun.checkin"),
+    ("metapi", "checkin.metapi.checkin"),
 ]
 
 

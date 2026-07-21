@@ -76,6 +76,13 @@ read -p "CUN_ACCESS_TOKEN: " val
 read -p "CUN_API_USER: " val
 [ -n "$val" ] && gh secret set CUN_API_USER -b "$val"
 
+# ===== Metapi =====
+read -p "METAPI_ACCESS_TOKEN: " val
+[ -n "$val" ] && gh secret set METAPI_ACCESS_TOKEN -b "$val"
+
+read -p "METAPI_API_USER: " val
+[ -n "$val" ] && gh secret set METAPI_API_USER -b "$val"
+
 # ===== 通用推送 =====
 read -p "PUSHPLUS_TOKEN (可选): " val
 [ -n "$val" ] && gh secret set PUSHPLUS_TOKEN -b "$val"

@@ -10,11 +10,11 @@
 | [Elysiver](https://elysiver.h-e.top/register?aff=vGW7) | `checkin/elysiver/checkin.py` | 令牌 | `ELYSIVER_ACCESS_TOKEN` `ELYSIVER_API_USER` |
 | [N1Neman](https://mynewapi.n1neman.fun/) | `checkin/n1neman/checkin.py` | 令牌 | `N1NEMAN_ACCESS_TOKEN` `N1NEMAN_API_USER` |
 | [Jiuuij](https://jiuuij.de5.net/) | `checkin/jiuuij/checkin.py` | 令牌 | `JIUUIJ_ACCESS_TOKEN` `JIUUIJ_API_USER` |
-| [君の公益](https://muyuan.do/) | `checkin/muyuan/checkin.py` | 令牌 | `MUYUAN_ACCESS_TOKEN` `MUYUAN_API_USER` |
 | [91](https://api.7r.fit/) | `checkin/7rfit/checkin.py` | 令牌 | `R91_ACCESS_TOKEN` `R91_API_USER` |
-| [Maoyulin](https://maoyulin.xyz/) | `checkin/maoyulin/checkin.py` | 令牌 | `MAOYULIN_ACCESS_TOKEN` `MAOYULIN_API_USER` |
 | [CHY公益站](https://chybenzun.top/) | `checkin/chy/checkin.py` | 令牌 | `CHY_ACCESS_TOKEN` `CHY_API_USER` |
+| [CHY订阅](https://dy.chybenzun.top/) | `checkin/chysub/checkin.py` | Cookie | `CHYSUB_COOKIE` 或 `CHYSUB_SESSION`+`CHYSUB_CF_CLEARANCE` |
 | [Mofas](https://www.mofas.one/) | `checkin/mofas/checkin.py` | 令牌 | `MOFAS_ACCESS_TOKEN` `MOFAS_API_USER` |
+
 | [Lan](https://ai.venlacy.com/) | `checkin/venlacy/checkin.py` | 令牌 | `VENLACY_ACCESS_TOKEN` `VENLACY_API_USER` |
 | [CUN](https://www.cun.ai/) | `checkin/cun/checkin.py` | 令牌 | `CUN_ACCESS_TOKEN` `CUN_API_USER` |
 
@@ -72,24 +72,11 @@ pip install -r requirements.txt
 - `JIUUIJ_API_USER` — 用户 ID
 - `JIUUIJ_TIMEOUT` — 请求超时秒数，默认 `30`
 
-### 君の公益
-
-- `MUYUAN_ACCESS_TOKEN` — 系统访问令牌
-- `MUYUAN_API_USER` — 用户 ID
-- `MUYUAN_TIMEOUT` — 请求超时秒数，默认 `30`
-
 ### 91
 
 - `R91_ACCESS_TOKEN` — 系统访问令牌
 - `R91_API_USER` — 用户 ID
 - `R91_TIMEOUT` — 请求超时秒数，默认 `30`
-
-### Maoyulin
-
-- `MAOYULIN_ACCESS_TOKEN` — 系统访问令牌
-- `MAOYULIN_API_USER` — 用户 ID
-- `MAOYULIN_TIMEOUT` — 请求超时秒数，默认 `30`
-- `MAOYULIN_CURRENCY` — 余额显示货币，默认 `猫猫`
 
 ### CHY公益站
 
@@ -97,7 +84,17 @@ pip install -r requirements.txt
 - `CHY_API_USER` — 用户 ID
 - `CHY_TIMEOUT` — 请求超时秒数，默认 `30`
 
+### CHY订阅
+
+- `CHYSUB_COOKIE` — 浏览器完整 Cookie（推荐，含 `cf_clearance`、`chy_session` 等）
+- `CHYSUB_SESSION` — 仅 `chy_session` 值（可与 CF 字段拆开配置）
+- `CHYSUB_CF_CLEARANCE` — Cloudflare `cf_clearance`（可选）
+- `CHYSUB_TIMEOUT` — 请求超时秒数，默认 `30`
+
+Cookie 会过期（尤其 `cf_clearance`），失效后需重新从浏览器复制。
+
 ### Mofas
+
 
 - `MOFAS_ACCESS_TOKEN` — 系统访问令牌
 - `MOFAS_API_USER` — 用户 ID
@@ -142,15 +139,15 @@ bash setup-secrets.sh
 | `N1NEMAN_API_USER` | N1Neman 用户 ID |
 | `JIUUIJ_ACCESS_TOKEN` | Jiuuij 系统访问令牌 |
 | `JIUUIJ_API_USER` | Jiuuij 用户 ID |
-| `MUYUAN_ACCESS_TOKEN` | 君の公益 系统访问令牌 |
-| `MUYUAN_API_USER` | 君の公益 用户 ID |
 | `R91_ACCESS_TOKEN` | 91 系统访问令牌 |
 | `R91_API_USER` | 91 用户 ID |
-| `MAOYULIN_ACCESS_TOKEN` | Maoyulin 系统访问令牌 |
-| `MAOYULIN_API_USER` | Maoyulin 用户 ID |
 | `CHY_ACCESS_TOKEN` | CHY公益站 系统访问令牌 |
 | `CHY_API_USER` | CHY公益站 用户 ID |
+| `CHYSUB_COOKIE` | CHY订阅 完整 Cookie |
+| `CHYSUB_SESSION` | CHY订阅 chy_session（可选） |
+| `CHYSUB_CF_CLEARANCE` | CHY订阅 cf_clearance（可选） |
 | `MOFAS_ACCESS_TOKEN` | Mofas 系统访问令牌 |
+
 | `MOFAS_API_USER` | Mofas 用户 ID |
 | `VENLACY_ACCESS_TOKEN` | Lan 系统访问令牌 |
 | `VENLACY_API_USER` | Lan 用户 ID |
@@ -191,11 +188,11 @@ $env:BOXYING_ACCESS_TOKEN="你的令牌"; $env:BOXYING_API_USER="你的ID"; pyth
 $env:ELYSIVER_ACCESS_TOKEN="你的令牌"; $env:ELYSIVER_API_USER="你的ID"; python checkin/elysiver/checkin.py
 $env:N1NEMAN_ACCESS_TOKEN="你的令牌"; $env:N1NEMAN_API_USER="你的ID"; python checkin/n1neman/checkin.py
 $env:JIUUIJ_ACCESS_TOKEN="你的令牌"; $env:JIUUIJ_API_USER="你的ID"; python checkin/jiuuij/checkin.py
-$env:MUYUAN_ACCESS_TOKEN="你的令牌"; $env:MUYUAN_API_USER="你的ID"; python checkin/muyuan/checkin.py
 $env:R91_ACCESS_TOKEN="你的令牌"; $env:R91_API_USER="你的ID"; python checkin/7rfit/checkin.py
-$env:MAOYULIN_ACCESS_TOKEN="你的令牌"; $env:MAOYULIN_API_USER="你的ID"; python checkin/maoyulin/checkin.py
 $env:CHY_ACCESS_TOKEN="你的令牌"; $env:CHY_API_USER="你的ID"; python checkin/chy/checkin.py
+$env:CHYSUB_COOKIE="cf_clearance=...; chy_session=..."; python checkin/chysub/checkin.py
 $env:MOFAS_ACCESS_TOKEN="你的令牌"; $env:MOFAS_API_USER="你的ID"; python checkin/mofas/checkin.py
+
 $env:VENLACY_ACCESS_TOKEN="你的令牌"; $env:VENLACY_API_USER="你的ID"; python checkin/venlacy/checkin.py
 $env:CUN_ACCESS_TOKEN="你的令牌"; $env:CUN_API_USER="你的ID"; python checkin/cun/checkin.py
 ```

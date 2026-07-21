@@ -48,13 +48,6 @@ read -p "JIUUIJ_ACCESS_TOKEN: " val
 read -p "JIUUIJ_API_USER: " val
 [ -n "$val" ] && gh secret set JIUUIJ_API_USER -b "$val"
 
-# ===== MUYUAN =====
-read -p "MUYUAN_ACCESS_TOKEN: " val
-[ -n "$val" ] && gh secret set MUYUAN_ACCESS_TOKEN -b "$val"
-
-read -p "MUYUAN_API_USER: " val
-[ -n "$val" ] && gh secret set MUYUAN_API_USER -b "$val"
-
 # ===== 91 =====
 read -p "R91_ACCESS_TOKEN: " val
 [ -n "$val" ] && gh secret set R91_ACCESS_TOKEN -b "$val"
@@ -62,19 +55,22 @@ read -p "R91_ACCESS_TOKEN: " val
 read -p "R91_API_USER: " val
 [ -n "$val" ] && gh secret set R91_API_USER -b "$val"
 
-# ===== MAOYULIN =====
-read -p "MAOYULIN_ACCESS_TOKEN: " val
-[ -n "$val" ] && gh secret set MAOYULIN_ACCESS_TOKEN -b "$val"
-
-read -p "MAOYULIN_API_USER: " val
-[ -n "$val" ] && gh secret set MAOYULIN_API_USER -b "$val"
-
 # ===== CHY公益站 =====
 read -p "CHY_ACCESS_TOKEN: " val
 [ -n "$val" ] && gh secret set CHY_ACCESS_TOKEN -b "$val"
 
 read -p "CHY_API_USER: " val
 [ -n "$val" ] && gh secret set CHY_API_USER -b "$val"
+
+# ===== CHY订阅 =====
+read -p "CHYSUB_COOKIE (完整 Cookie，推荐): " val
+[ -n "$val" ] && gh secret set CHYSUB_COOKIE -b "$val"
+
+read -p "CHYSUB_SESSION (chy_session，可选): " val
+[ -n "$val" ] && gh secret set CHYSUB_SESSION -b "$val"
+
+read -p "CHYSUB_CF_CLEARANCE (可选): " val
+[ -n "$val" ] && gh secret set CHYSUB_CF_CLEARANCE -b "$val"
 
 # ===== Mofas =====
 read -p "MOFAS_ACCESS_TOKEN: " val

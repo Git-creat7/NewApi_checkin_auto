@@ -8,7 +8,6 @@
 |:-----|:--------|:--------|:------------|
 | [Boxying](https://www.boxying.com/register?aff=henf) | `checkin/boxying/checkin.py` | 令牌 / Session Cookie | `BOXYING_ACCESS_TOKEN` `BOXYING_SESSION` `BOXYING_API_USER` |
 | [Elysiver](https://elysiver.h-e.top/register?aff=vGW7) | `checkin/elysiver/checkin.py` | 令牌 | `ELYSIVER_ACCESS_TOKEN` `ELYSIVER_API_USER` |
-| [N1Neman](https://mynewapi.n1neman.fun/) | `checkin/n1neman/checkin.py` | 令牌 | `N1NEMAN_ACCESS_TOKEN` `N1NEMAN_API_USER` |
 | [Jiuuij](https://jiuuij.de5.net/) | `checkin/jiuuij/checkin.py` | 令牌 | `JIUUIJ_ACCESS_TOKEN` `JIUUIJ_API_USER` |
 | [91](https://api.7r.fit/) | `checkin/7rfit/checkin.py` | 令牌 | `R91_ACCESS_TOKEN` `R91_API_USER` |
 | [Mofas](https://www.mofas.one/) | `checkin/mofas/checkin.py` | 令牌 | `MOFAS_ACCESS_TOKEN` `MOFAS_API_USER` |
@@ -58,12 +57,6 @@ pip install -r requirements.txt
 - `ELYSIVER_ACCESS_TOKEN` — 系统访问令牌
 - `ELYSIVER_API_USER` — 用户 ID
 - `ELYSIVER_TIMEOUT` — 请求超时秒数，默认 `30`
-
-### N1Neman
-
-- `N1NEMAN_ACCESS_TOKEN` — 系统访问令牌
-- `N1NEMAN_API_USER` — 用户 ID
-- `N1NEMAN_TIMEOUT` — 请求超时秒数，默认 `30`
 
 ### Jiuuij
 
@@ -126,8 +119,6 @@ bash setup-secrets.sh
 | `BOXYING_API_USER` | Boxying 用户 ID |
 | `ELYSIVER_ACCESS_TOKEN` | Elysiver 系统访问令牌 |
 | `ELYSIVER_API_USER` | Elysiver 用户 ID |
-| `N1NEMAN_ACCESS_TOKEN` | N1Neman 系统访问令牌 |
-| `N1NEMAN_API_USER` | N1Neman 用户 ID |
 | `JIUUIJ_ACCESS_TOKEN` | Jiuuij 系统访问令牌 |
 | `JIUUIJ_API_USER` | Jiuuij 用户 ID |
 | `R91_ACCESS_TOKEN` | 91 系统访问令牌 |
@@ -176,7 +167,6 @@ PowerShell 示例：
 ```powershell
 $env:BOXYING_ACCESS_TOKEN="你的令牌"; $env:BOXYING_API_USER="你的ID"; python checkin/boxying/checkin.py
 $env:ELYSIVER_ACCESS_TOKEN="你的令牌"; $env:ELYSIVER_API_USER="你的ID"; python checkin/elysiver/checkin.py
-$env:N1NEMAN_ACCESS_TOKEN="你的令牌"; $env:N1NEMAN_API_USER="你的ID"; python checkin/n1neman/checkin.py
 $env:JIUUIJ_ACCESS_TOKEN="你的令牌"; $env:JIUUIJ_API_USER="你的ID"; python checkin/jiuuij/checkin.py
 $env:R91_ACCESS_TOKEN="你的令牌"; $env:R91_API_USER="你的ID"; python checkin/7rfit/checkin.py
 $env:MOFAS_ACCESS_TOKEN="你的令牌"; $env:MOFAS_API_USER="你的ID"; python checkin/mofas/checkin.py

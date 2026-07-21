@@ -34,13 +34,6 @@ read -p "ELYSIVER_ACCESS_TOKEN: " val
 read -p "ELYSIVER_API_USER: " val
 [ -n "$val" ] && gh secret set ELYSIVER_API_USER -b "$val"
 
-# ===== N1NEMAN =====
-read -p "N1NEMAN_ACCESS_TOKEN: " val
-[ -n "$val" ] && gh secret set N1NEMAN_ACCESS_TOKEN -b "$val"
-
-read -p "N1NEMAN_API_USER: " val
-[ -n "$val" ] && gh secret set N1NEMAN_API_USER -b "$val"
-
 # ===== JIUUIJ =====
 read -p "JIUUIJ_ACCESS_TOKEN: " val
 [ -n "$val" ] && gh secret set JIUUIJ_ACCESS_TOKEN -b "$val"

@@ -21,7 +21,6 @@ PUSHPLUS_TOKEN = os.getenv("PUSHPLUS_TOKEN", "").strip()
 PLATFORMS = [
     ("boxying", "checkin.boxying.checkin"),
     ("elysiver", "checkin.elysiver.checkin"),
-    ("n1neman", "checkin.n1neman.checkin"),
     ("jiuuij", "checkin.jiuuij.checkin"),
     ("r91", "checkin.7rfit.checkin"),
     ("mofas", "checkin.mofas.checkin"),

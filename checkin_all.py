@@ -24,8 +24,6 @@ PLATFORMS = [
     ("n1neman", "checkin.n1neman.checkin"),
     ("jiuuij", "checkin.jiuuij.checkin"),
     ("r91", "checkin.7rfit.checkin"),
-    ("chy", "checkin.chy.checkin"),
-    ("chysub", "checkin.chysub.checkin"),
     ("mofas", "checkin.mofas.checkin"),
     ("venlacy", "checkin.venlacy.checkin"),
     ("cun", "checkin.cun.checkin"),

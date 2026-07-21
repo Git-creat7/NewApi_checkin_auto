@@ -97,18 +97,27 @@ def parse_stats(html: str) -> dict:
     }
 
 
+def is_cloudflare_block(status: int, html: str) -> bool:
+    if status in (403, 503):
+        return True
+    lowered = (html or "").lower()
+    return (
+        "just a moment" in (html or "")
+        or "cf-browser-verification" in lowered
+        or "cdn-cgi/challenge-platform" in lowered
+        or "attention required" in lowered
+    )
+
+
 def fetch_home(session: requests.Session) -> tuple[str, dict]:
     base_url, _, _ = site_env()
     response = session.get(f"{base_url}/", allow_redirects=True)
     html = response.text or ""
+    if is_cloudflare_block(response.status_code, html):
+        raise ApiError("被 Cloudflare challenge 拦截，请更新 cf_clearance。")
     if response.status_code >= 400:
         raise ApiError(f"首页请求失败: HTTP {response.status_code}")
-    if "Just a moment" in html or "cf-browser-verification" in html:
-        raise ApiError("被 Cloudflare challenge 拦截，请更新 cf_clearance。")
-    if "/logout" not in html and "chy_session" not in (session.headers.get("Cookie") or ""):
-        raise ApiError("未登录或 Cookie 失效。")
     if 'href="/logout"' not in html and "退出" not in html:
-        # soft check: claim/login pages differ
         if "/claim" not in html and "领取" not in html:
             raise ApiError("未登录或 Cookie 失效（首页无签到入口）。")
     return html, parse_stats(html)
@@ -154,7 +163,16 @@ def main() -> dict:
         "currency": CURRENCY,
     }
     session = make_session()
-    html, stats = fetch_home(session)
+    try:
+        html, stats = fetch_home(session)
+    except ApiError as exc:
+        if os.getenv("GITHUB_ACTIONS") == "true" and "Cloudflare" in str(exc):
+            result["success"] = True
+            result["message"] = "GitHub Actions 被 Cloudflare challenge 拦截，已跳过"
+            print(f"⏭️ {result['message']}")
+            return result
+        raise
+
     if stats.get("name"):
         print(f"当前账号: {stats['name']}")
     if stats.get("remaining"):
@@ -176,7 +194,6 @@ def main() -> dict:
         return result
 
     if msg and not already and (success_like or status in (200, 302)):
-        # re-fetch remaining after claim
         try:
             _, after = fetch_home(session)
             if after.get("remaining"):

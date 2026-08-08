@@ -18,7 +18,7 @@
 
 ## 运行环境
 
-- Python `3.10+`
+- Python `3.12+`（3.10+ 也可，需安装 `typing_extensions`）
 - 依赖见 `requirements.txt`
 
 ```bash

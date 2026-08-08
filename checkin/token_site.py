@@ -3,9 +3,11 @@ from __future__ import annotations
 
 import os
 import sys
+import time
 from dataclasses import dataclass
 
 from curl_cffi import requests
+from curl_cffi.requests.exceptions import RequestException
 
 
 if sys.platform == "win32":
@@ -67,6 +69,29 @@ def make_session(config: TokenSiteConfig) -> requests.Session:
     return session
 
 
+def request_json(session: requests.Session, method: str, url: str, label: str, retries: int = 3) -> dict:
+    last_exc: Exception | None = None
+    for attempt in range(1, retries + 1):
+        try:
+            response = session.request(method, url)
+            try:
+                data = response.json()
+            except Exception as exc:
+                raise ApiError(f"{label}: invalid JSON - {response.text[:200]}") from exc
+            print(f"{label}: {response.text[:300]}")
+            return data
+        except ApiError:
+            raise
+        except RequestException as exc:
+            last_exc = exc
+            if attempt >= retries:
+                break
+            wait = attempt * 2
+            print(f"⚠️ {label} 网络异常，{wait}s 后重试 ({attempt}/{retries}): {exc}")
+            time.sleep(wait)
+    raise ApiError(f"{label} 网络失败: {last_exc}") from last_exc
+
+
 def ensure_json(response, label: str) -> dict:
     try:
         data = response.json()
@@ -78,7 +103,7 @@ def ensure_json(response, label: str) -> dict:
 
 def fetch_self(config: TokenSiteConfig, session: requests.Session) -> dict:
     base_url, _, api_user, _, _ = site_env(config)
-    data = ensure_json(session.get(f"{base_url}/api/user/self"), "用户信息")
+    data = request_json(session, "GET", f"{base_url}/api/user/self", "用户信息")
     if not data.get("success"):
         raise ApiError(data.get("message") or "Authentication failed.")
 
@@ -93,7 +118,21 @@ def fetch_self(config: TokenSiteConfig, session: requests.Session) -> dict:
 
 def post_checkin(config: TokenSiteConfig, session: requests.Session) -> dict:
     base_url, _, _, _, _ = site_env(config)
-    return ensure_json(session.post(f"{base_url}/api/user/checkin"), "签到")
+    return request_json(session, "POST", f"{base_url}/api/user/checkin", "签到")
+
+
+def is_soft_success_message(message: str) -> bool:
+    soft_keys = (
+        "已经签到",
+        "已签到",
+        "签到功能未启用",
+        "未开启签到",
+        "签到未开启",
+        "checkin not enabled",
+        "check-in is disabled",
+    )
+    lowered = message.lower()
+    return any(k.lower() in lowered if k.isascii() else k in message for k in soft_keys)
 
 
 def run_token_checkin(config: TokenSiteConfig) -> dict:
@@ -111,17 +150,16 @@ def run_token_checkin(config: TokenSiteConfig) -> dict:
     user_before = fetch_self(config, session)
     print(f"当前账号: id={user_before.get('id')} name={user_before.get('display_name')}")
     quota_before = user_before.get("quota")
+    result["balance"] = quota_before
 
     checkin_resp = post_checkin(config, session)
     message = checkin_resp.get("message") or checkin_resp.get("msg") or ""
     success = bool(checkin_resp.get("success") or checkin_resp.get("ret") == 1)
 
-    already = not success and ("已经签到" in message or "已签到" in message)
-    if already:
+    if not success and is_soft_success_message(message):
         result["success"] = True
-        result["balance"] = quota_before
         result["message"] = message
-        print(f"✅ 今日已签到: {message}")
+        print(f"✅ {message}")
         return result
 
     if not success:
